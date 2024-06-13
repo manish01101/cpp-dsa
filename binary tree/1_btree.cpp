@@ -37,7 +37,7 @@ node* buildTree(node* root) {
     return root;
 }
 
-void levelOrderTraversal(node* root){
+void levelOrderTraversal(node* root){  // bfs
     queue<node*> q;
     q.push(root);
     q.push(NULL); // for level wise separator

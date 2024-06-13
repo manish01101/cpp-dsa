@@ -1,3 +1,17 @@
+#include<iostream>
+#include<map>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* left;
+    Node* right;
+    Node(int data) {
+        this->data = data;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+};
 class Solution {
     public:
     int findPosition (int in[], int element, int n) {
@@ -7,9 +21,9 @@ class Solution {
         return -1;
     }
 
-    Node* solve(int in[], int pre[], int &index, int inorderStart, inorderEnd, int n) {
+    Node* solve(int in[], int pre[], int &index, int inorderStart, int inorderEnd, int n) {
         //base case
-        int( index >= n || inorderStart > inorderEnd) return NULL;
+        if( index >= n || inorderStart > inorderEnd) return NULL;
 
         int element = pre[index++];
         Node* root = new Node(element);
@@ -24,9 +38,8 @@ class Solution {
 
     Node* buildTree(int in[], int pre[], int n) {
         int preOrderIndex = 0;
-        Node* ans = solve(in, pre, preOrderIndex, 0, n-1, n) {
-            return ans;
-        }
+        Node* ans = solve(in, pre, preOrderIndex, 0, n-1, n);
+        return ans;
     }
 };
 
@@ -40,9 +53,9 @@ class Solution {
             nodeToIndex[in[i]] = i;
         }
     }
-    Node* solve(int in[], int pre[], int &index, int inorderStart, inorderEnd, int n, map<int, int> &nodeToIndex) {
+    Node* solve(int in[], int pre[], int &index, int inorderStart, int inorderEnd, int n, map<int, int> &nodeToIndex) {
         //base case
-        int( index >= n || inorderStart > inorderEnd) return NULL;
+        if( index >= n || inorderStart > inorderEnd) return NULL;
 
         int element = pre[index++];
         Node* root = new Node(element);
@@ -61,8 +74,7 @@ class Solution {
         //create nodes to index mapping
         createMapping(in, nodeToIndex, n);
 
-        Node* ans = solve(in, pre, preOrderIndex, 0, n-1, n) {
-            return ans;
-        }
+        Node* ans = solve(in, pre, preOrderIndex, 0, n-1, n, nodeToIndex);
+        return ans;
     }
 };

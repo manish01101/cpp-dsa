@@ -1,3 +1,17 @@
+#include<iostream>
+#include<map>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* left;
+    Node* right;
+    Node(int data) {
+        this->data = data;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+};
 class Solution {
     public:
     void createMapping(int in[], map<int, int> nodeToIndex, int n) {
@@ -5,9 +19,9 @@ class Solution {
             nodeToIndex[in[i]] = i;
         }
     }
-    Node* solve(int in[], int post[], int &index, int inorderStart, inorderEnd, int n, map<int, int> &nodeToIndex) {
+    Node* solve(int in[], int post[], int &index, int inorderStart, int inorderEnd, int n, map<int, int> &nodeToIndex) {
         //base case
-        int( index < 0 || inorderStart > inorderEnd) return NULL;
+        if( index < 0 || inorderStart > inorderEnd) return NULL;
 
         int element = post[index--];
         Node* root = new Node(element);
@@ -27,8 +41,7 @@ class Solution {
         //create nodes to index mapping
         createMapping(in, nodeToIndex, n);
 
-        Node* ans = solve(in, pre, postOrderIndex, 0, n-1, n) {
-            return ans;
-        }
+        Node* ans = solve(in, pre, postOrderIndex, 0, n-1, n, nodeToIndex);
+        return ans;
     }
 };

@@ -1,11 +1,25 @@
-
+#include<iostream>
+#include<map>
+#include<queue>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* left;
+    Node* right;
+    Node(int data) {
+        this->data = data;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+};
 
 class Solution {
     public:
     //create mapping & return target node
     Node* createParentMapping(Node* root, int target, map<Node*, Node*> &nodeToParent) {
 
-        Node* res = NULL:
+        Node* res = NULL;
 
         queue<Node*> q;
         q.push(root);
@@ -28,7 +42,7 @@ class Solution {
         }
         return res;
     }
-    int burnTree() {
+    int burnTree(Node* root, map<Node*, Node*> nodeToParent) {
 
         map<Node*, bool> visited;
         queue<Node*> q;
@@ -41,7 +55,7 @@ class Solution {
         while (!q.empty())
         {   bool flag = 0;
             int size = q.size();
-            for(int i=0;; i<size; i++) {
+            for(int i=0; i<size; i++) {
                 //process neighbouring nodes
                 Node* front = q.front();
                 q.pop();
@@ -79,7 +93,7 @@ class Solution {
         map<Node*, Node*> nodeToParent;
         Node* target = createParentMapping(root, target, nodeToParent);
 
-        int ans = burnTree(targetNode, nodeToParent);
+        int ans = burnTree(target, nodeToParent);
         return ans;
     }
-}
+};

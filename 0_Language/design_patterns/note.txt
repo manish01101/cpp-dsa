@@ -1,0 +1,9 @@
+
+Design patterns are reusable solutions to common problems encountered during software development. They provide templates or blueprints for solving recurring design problems and promote code reusability, flexibility, and maintainability.
+
+types:
+    =>Creational Patterns (Singleton, Factory, Abstract Factory, Builder, Prototype)
+
+    =>Structural Patterns (Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy)
+
+    =>Behavioral Patterns (Chain of Responsibility, Command, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor)
