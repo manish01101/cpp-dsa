@@ -47,10 +47,10 @@ void solve(int x, int y, vector<vector<int>> &arr, int n, vector<string> &ans, v
  
 vector<string> searchMaze(vector<vector<int>> &arr, int n) {
     vector<string> ans;
-    vector<vector<bool>> visited(n, vector<bool> (n,0));
-    string path = "";
     if(arr[0][0] == 0)
         return ans;
+    vector<vector<bool>> visited(n, vector<bool> (n,0));
+    string path = "";
     solve(0,0, arr, n, ans, visited, path);
     return ans;
 }
@@ -66,7 +66,7 @@ int main() {
     // }
     vector<string> str = searchMaze(v, 4);
     for(int i=0; i<str.size(); i++) {
-        cout << str[i];
+        cout << str[i] << " ";
     }cout << endl;
 }
 
