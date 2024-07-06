@@ -4,15 +4,15 @@ using namespace std;
 
 int main() {
     ifstream infile("a.txt");
-    if(!infile) {
+    if (!infile) {
         cerr << "file not opened" << endl;
     }
     ofstream outfile("b.txt");
-    if(!outfile) {
-        cout  << "file not opened" << endl;
+    if (!outfile) {
+        cout << "file not opened" << endl;
     }
     string str;
-    while(getline(infile, str)) {
+    while (getline(infile, str)) {
         outfile << str << endl;
     }
     outfile.close();

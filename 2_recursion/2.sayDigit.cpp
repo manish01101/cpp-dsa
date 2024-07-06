@@ -6,16 +6,16 @@ void sayDigit(int n, string arr[]) {
     if (n == 0) return;
 
     // processing
-    int digit = n%10;
-    n = n/10;
+    int digit = n % 10;
+    n = n / 10;
 
     // rec call
     sayDigit(n, arr);
-        
-    cout << arr[digit] << " " ;
+
+    cout << arr[digit] << " ";
 }
 
 int main() {
-    string arr[] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    string arr[] = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
     sayDigit(560, arr);
 }

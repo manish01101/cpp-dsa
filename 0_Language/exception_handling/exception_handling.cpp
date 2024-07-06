@@ -66,10 +66,11 @@ You can define custom exception classes by deriving from the std::exception clas
 #include <stdexcept>
 // Custom exception class for negative numbers
 class NegativeNumberException : public std::exception {
-public:
+    public:
     const char* what() const noexcept override {
         return "Negative number encountered";
-} };
+    }
+};
 int main() {
     try {
         int num = -5;
@@ -77,7 +78,8 @@ int main() {
             throw NegativeNumberException();
         }
         std::cout << "Number: " << num << std::endl;
-    } catch (const std::exception& e) {
+    }
+    catch (const std::exception& e) {
         std::cerr << "Exception caught: " << e.what() << std::endl;
     }
     return 0;

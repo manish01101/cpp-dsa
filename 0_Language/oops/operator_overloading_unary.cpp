@@ -4,11 +4,12 @@ using namespace std;
 class Counter {
     private:
     unsigned int count;
+
     public:
     Counter() : count(0) {} // no args constructor
     Counter(int x) : count(x) {} // one args constructor
 
-    unsigned int get_count() {return count;}
+    unsigned int get_count() { return count; }
     // UNARY OPERATOR
     Counter operator ++ () { // prefix operator overloading
         return Counter(++count); // return unnamed temp obj

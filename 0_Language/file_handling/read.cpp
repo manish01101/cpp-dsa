@@ -15,18 +15,18 @@ int main() {
     // ifstream infile;
     // infile.open("a.txt");
 
-    if(!infile.is_open()) {
+    if (!infile.is_open()) {
         cerr << "file can't opened" << endl;
     }
     string str;
     infile >> str;
 
     // getline(infile, str);  //this will read a line
-    while(getline(infile, str)) {
+    while (getline(infile, str)) {
         cout << str << endl;
     }
 
     // end of file
-    if(infile.eof()) cout << "end of file reached" << endl;
+    if (infile.eof()) cout << "end of file reached" << endl;
     infile.close();
-}   
+}

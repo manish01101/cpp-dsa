@@ -10,7 +10,7 @@ allocate book to m-student such that the max no. of pages assigned to a student 
 arr => 10, 20, 30, 40
 n = 4
 m = 2
-allocation : 
+allocation :
         10 | 20, 30, 40 => max(10, 90) => 90
         10, 20 | 30, 40 => max(30, 70) => 70
         10, 20, 30 | 40 => max(60, 40) => 60
@@ -25,13 +25,13 @@ bool isPossible(int arr[], int n, int m, int mid) {
     int studentCount = 1;
     int pageSum = 0;
 
-    for(int i=0; i<n; i++) {
-        if(pageSum + arr[i] <= mid) { // for first student
-            pageSum +=arr[i];
+    for (int i = 0; i < n; i++) {
+        if (pageSum + arr[i] <= mid) { // for first student
+            pageSum += arr[i];
         }
         else {
             studentCount++;
-            if(studentCount > m || arr[i] > mid) {
+            if (studentCount > m || arr[i] > mid) {
                 return false;
             }
             pageSum = arr[i];
@@ -40,20 +40,21 @@ bool isPossible(int arr[], int n, int m, int mid) {
     return true;
 }
 int allocateBooks(int arr[], int n, int m) {
-    int s=0;
+    int s = 0;
     int sum = 0;
-    for(int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         sum += arr[i];
     }
     int e = sum;
     int ans = -1;
-    int mid = (s+e)/2;
+    int mid = (s + e) / 2;
 
-    while(s<=e) {
-        if(isPossible(arr, n, m, mid)) {
+    while (s <= e) {
+        if (isPossible(arr, n, m, mid)) {
             ans = mid;
             e = mid - 1; //for min
-        }else {
+        }
+        else {
             s = mid + 1;
         }
     }

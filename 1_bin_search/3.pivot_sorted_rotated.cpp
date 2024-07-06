@@ -4,7 +4,7 @@ pivot ele may be max or min
 first part -> 7, 9
 second part -> 1, 2, 3
 if(arr[mid] >= arr[0]) { // indicates mid is first part only
-    start = mid + 1;    
+    start = mid + 1;
 }
 else {
     e = mid
@@ -16,10 +16,10 @@ using namespace std;
 
 int getPivot(int arr[], int n) {
     int s = 0;
-    int e = n-1;
+    int e = n - 1;
     while (s < e) {
-        int mid = (s+e)/2;
-        if(arr[mid] >= arr[0]) {
+        int mid = (s + e) / 2;
+        if (arr[mid] >= arr[0]) {
             s = mid + 1; // increasing s will get to pivot ele
         }
         else {
@@ -46,9 +46,9 @@ else {
 }
 */
 int binSearch(int arr[], int s, int e, int target) {
-    while(s <= e) {
-        int mid = (s+e)/2;
-        if(target == arr[mid]) {
+    while (s <= e) {
+        int mid = (s + e) / 2;
+        if (target == arr[mid]) {
             return mid;
         }
         else if (target > arr[mid]) {
@@ -63,10 +63,10 @@ int binSearch(int arr[], int s, int e, int target) {
 // final fn
 int findIndex(int arr[], int n, int target) {
     int pivot = getPivot(arr, n);
-    if(target >= arr[pivot] && target <= arr[n-1]) { // 2nd part (1, 2, 3)
-        return binSearch(arr, pivot, n-1, target);
+    if (target >= arr[pivot] && target <= arr[n - 1]) { // 2nd part (1, 2, 3)
+        return binSearch(arr, pivot, n - 1, target);
     }
     else { // first part (7, 9)
-        return binSearch(arr, 0, pivot-1, target);
+        return binSearch(arr, 0, pivot - 1, target);
     }
 }

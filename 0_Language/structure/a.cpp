@@ -1,14 +1,14 @@
 #include<iostream>
 using namespace std;
 
-struct employee{
+struct employee {
     int id;
     string name;
     float salary;
 };
 
-int main(){
+int main() {
     struct employee one;
     one.id = 5;
-    cout << one.id <<endl;
+    cout << one.id << endl;
 }

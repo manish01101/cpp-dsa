@@ -2,9 +2,9 @@
 #include<vector>
 using namespace std;
 
-void solve(string digits, string output, int i, vector<string> &ans, string mapping[]) {
+void solve(string digits, string output, int i, vector<string>& ans, string mapping[]) {
     // base case
-    if(i >= digits.length()) {
+    if (i >= digits.length()) {
         ans.push_back(output);
         return;
     }
@@ -13,21 +13,21 @@ void solve(string digits, string output, int i, vector<string> &ans, string mapp
     string value = mapping[number];
 
     // rec call for each char in value
-    for(int j=0; j<value.length(); j++) {
+    for (int j = 0; j < value.length(); j++) {
         output.push_back(value[j]);
-        solve(digits, output, i+1, ans, mapping);
+        solve(digits, output, i + 1, ans, mapping);
         output.pop_back(); // backtrack remove the added char
     }
 }
 
 vector<string> letterCombination(string digits) {
     vector<string> ans;
-    if(digits.length() == 0) {
+    if (digits.length() == 0) {
         return ans;
     }
     string output;
-    int i=0;
-    string mapping[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    int i = 0;
+    string mapping[10] = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
     solve(digits, output, i, ans, mapping);
     return ans;
 }
@@ -35,7 +35,7 @@ vector<string> letterCombination(string digits) {
 int main() {
     string dit = "23";
     vector<string> ans = letterCombination(dit);
-    for(auto i: ans) {
+    for (auto i : ans) {
         cout << i << " ";
     }
     cout << endl;

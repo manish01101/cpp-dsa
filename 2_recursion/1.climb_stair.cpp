@@ -8,9 +8,9 @@ base case:
 
 int countDistinctWay(long long n) {
     // base case
-    if(n < 0) return 0;
-    if(n == 0) return 1;
+    if (n < 0) return 0;
+    if (n == 0) return 1;
 
     // rec rel
-    return countDistinctWay(n-1) + countDistinctWay(n-2);
+    return countDistinctWay(n - 1) + countDistinctWay(n - 2);
 }

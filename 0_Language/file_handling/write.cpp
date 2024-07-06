@@ -11,9 +11,9 @@ using namespace std;
 int main() {
 
     // MODE AVAILABLE => ios::app(i.e. append) & ios::trunc(i.e. truncate, & this is default mode)
-    ofstream outfile("a.txt", ios::app); 
+    ofstream outfile("a.txt", ios::app);
 
-    if(!outfile) {
+    if (!outfile) {
         cerr << "error opening file" << endl;
     }
     outfile << "hello manish" << endl; // if we use endl here means after writing curson move to next line, and without endl append text in same line

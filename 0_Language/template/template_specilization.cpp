@@ -26,7 +26,7 @@ int main() {
     print("world"); // Output: Specialized for string literal: world
 
     // The std::string class copies the characters from the string literal(i.e. "hello") into its own internal, modifiable buffer.
-    std::string str = "hello"; 
+    std::string str = "hello";
     print(str);  // Output: Specialized for string object: hello
     return 0;
 }

@@ -20,25 +20,27 @@ class FriendClass; // forward declaration of class
 
 class MyClass {
     private:
-        int num;
+    int num;
+
     public:
-        MyClass(int n) : num(n) {}
-        friend void displayNum(const MyClass &obj);
-        friend class FriendClass;
+    MyClass(int n) : num(n) {}
+    friend void displayNum(const MyClass& obj);
+    friend class FriendClass;
 };
 
-void displayNum(const MyClass &obj) {
+void displayNum(const MyClass& obj) {
     cout << "Val of num: " << obj.num << endl;
 }
 // friend class
 class FriendClass {
     private:
-        int n;
+    int n;
+
     public:
-        FriendClass(int n) : n(n) {} // same name also possible
-        void displayFriend(const MyClass &obj) {
-            cout << "val of friend obj: " << n << "; val of myclass obj: " << obj.num << endl;
-        }
+    FriendClass(int n) : n(n) {} // same name also possible
+    void displayFriend(const MyClass& obj) {
+        cout << "val of friend obj: " << n << "; val of myclass obj: " << obj.num << endl;
+    }
 };
 
 

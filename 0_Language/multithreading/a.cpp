@@ -11,15 +11,15 @@ ull oddSum = 0;
 ull evenSum = 0;
 
 void findEven(ull start, ull end) {
-  for(ull i=start; i<=end; i++) {
-    if(!(i&1)) {
+  for (ull i = start; i <= end; i++) {
+    if (!(i & 1)) {
       evenSum += i;
     }
   }
 }
 void findOdd(ull start, ull end) {
-  for(ull i=start; i<=end; i++) {
-    if((i&1)) {
+  for (ull i = start; i <= end; i++) {
+    if ((i & 1)) {
       oddSum += i;
     }
   }
@@ -27,7 +27,7 @@ void findOdd(ull start, ull end) {
 
 int main() {
   ull start = 0, end = 1900000000;
-  
+
   auto startTime = high_resolution_clock::now();
 
   // thread t(function ptr, ---, ---)
@@ -51,7 +51,7 @@ int main() {
   cout << "oddsum: " << oddSum << endl;
 
   cout << duration.count() << "in ms" << endl;
-  cout << duration.count()/1000.0 << "in s" << endl;
+  cout << duration.count() / 1000.0 << "in s" << endl;
 
   return 0;
 }

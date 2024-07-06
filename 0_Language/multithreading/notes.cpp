@@ -43,7 +43,7 @@
 
 // 3. functor (function object)
 /*
-Functors, also known as function objects, are objects that can be invoked like functions. 
+Functors, also known as function objects, are objects that can be invoked like functions.
 */
 // class Base {
 //   public:
@@ -86,13 +86,13 @@ Functors, also known as function objects, are objects that can be invoked like f
 class Base {
   public:
   static void run(int x) { // this is static fn
-    while (x-->0){
-      std::cout << x <<std::endl;
+    while (x-- > 0) {
+      std::cout << x << std::endl;
     }
   }
 };
 int main() {
   std::thread t(&Base::run, 10);
-  t.join(); 
+  t.join();
   return 0;
 }
