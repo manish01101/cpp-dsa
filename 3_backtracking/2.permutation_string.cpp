@@ -15,7 +15,7 @@ abc => i @ a=> a swap with a => abc => i@b => b swap with b => abc
 template <typename T>
 void solve(vector<T> nums, vector<vector<T>> &ans, int i) {
     // base case
-    if(i >= nums.size()) {
+    if(i >= nums.size()-1) { // i reached at last index, just store it & return
         ans.push_back(nums);
         return;
     }
