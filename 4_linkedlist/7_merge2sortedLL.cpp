@@ -1,19 +1,7 @@
-#include<iostream>
-#include<map>
-using namespace std;
-template <typename T>
-class Node {
-  public:
-  T data;
-  Node* next;
-  Node(T data) {
-    this->data = data;
-    this->next = nullptr;
-  }
-};
+#include "0.hpp"
 
 template <typename T>
-Node<T>* solve(Node<T>* first, Node<T>* second) {
+NodeTemplate<T>* solve(NodeTemplate<T>* first, NodeTemplate<T>* second) {
   // if only one node present in first list
   if (first->next == nullptr) {
     first->next = second;
@@ -22,10 +10,10 @@ Node<T>* solve(Node<T>* first, Node<T>* second) {
 
 
 
-  Node* <T> curr1 = first;
-  Node* <T> next1 = curr1->next;
-  Node* <T> curr2 = second;
-  Node* <T> next2 = curr2->next;
+  NodeTemplate* <T> curr1 = first;
+  NodeTemplate* <T> next1 = curr1->next;
+  NodeTemplate* <T> curr2 = second;
+  NodeTemplate* <T> next2 = curr2->next;
 
   while (next1 != nullptr && curr2 != nullptr) {
     if (curr2->data >= curr1->data && curr2->data <= next1->data) {
@@ -50,7 +38,7 @@ Node<T>* solve(Node<T>* first, Node<T>* second) {
 }
 
 template <typename T>
-Node<T>* sortTwoList(Node<T>* first, Node<T>* second) {
+NodeTemplate<T>* sortTwoList(NodeTemplate<T>* first, NodeTemplate<T>* second) {
   if (first == nullptr)
     return second;
   if (second == nullptr)

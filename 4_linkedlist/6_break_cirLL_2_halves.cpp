@@ -1,15 +1,4 @@
-#include<iostream>
-using namespace std;
-class Node {
-    public:
-    int data;
-    Node* next;
-    Node(int data) {
-        this->data = data;
-        this->next = nullptr;
-    }
-};
-
+#include "0.hpp"
 
 void splitList(Node* head, Node** head1_ref, Node** head2_ref) {
     if (head == NULL || head->next == NULL) {

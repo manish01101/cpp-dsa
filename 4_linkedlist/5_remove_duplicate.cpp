@@ -1,17 +1,4 @@
-#include<iostream>
-#include<map>
-using namespace std;
-class Node {
-  public:
-  int data;
-  Node* next;
-  Node(int data) {
-    this->data = data;
-    this->next = nullptr;
-  }
-};
-
-
+#include "0.hpp"
 /*
 remove duplicate in sorted LL
 
