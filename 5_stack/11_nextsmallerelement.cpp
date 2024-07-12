@@ -3,14 +3,14 @@
 #include<stack>
 using namespace std;
 
-vector<int> nextSmallerElement(vector<int> &arr, int n) {
+vector<int> nextSmallerElement(vector<int>& arr, int n) {
     stack<int> stk;
     stk.push(-1);
     vector<int> ans(n);
 
-    for(int i = n-1; i >= 0; i--) {
+    for (int i = n - 1; i >= 0; i--) {
         int curr = arr[i];
-        while(stk.top() >= curr) {
+        while (stk.top() >= curr) {
             stk.pop();
         }
         //now top < curr
@@ -21,12 +21,12 @@ vector<int> nextSmallerElement(vector<int> &arr, int n) {
 }
 
 int main() {
-    vector<int> arr = {2, 1, 4, 3};
+    vector<int> arr = { 2, 1, 4, 3 };
     int n = 4;
 
     vector<int> arrf = nextSmallerElement(arr, n);
 
-    for(int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         cout << arrf[i] << " ";
     }
     cout << endl;

@@ -5,11 +5,11 @@ using namespace std;
 int main() {
     stack <char> s;
     string str = "manish";
-    for(int i = 0; i < str.length(); i++) {
+    for (int i = 0; i < str.length(); i++) {
         s.push(str[i]);
     }
     string ans;
-    while(!s.empty()) {
+    while (!s.empty()) {
         ans.push_back(s.top());
         s.pop();
     }

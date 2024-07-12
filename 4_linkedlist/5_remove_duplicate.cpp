@@ -22,9 +22,10 @@ Node* uniqueSortedList(Node* head) {
   Node* curr = head;
 
   while (curr != nullptr) {
-    if ((curr->next != nullptr) && curr->data == curr->next->data) {
+    if ((curr->next != nullptr) && (curr->data == curr->next->data)) {
       Node* temp = curr->next;
       curr->next = curr->next->next;
+      temp->next = nullptr;
       delete temp;
     }
     else {
@@ -67,6 +68,7 @@ Node* removeDuplicates(Node* head) {
     else {
       Node* temp = curr->next;
       curr->next = curr->next->next;
+      temp->next = nullptr;
       delete temp;
     }
   }

@@ -3,20 +3,16 @@
 #include <vector>
 using namespace std;
 
-class Solution
-{
+class Solution {
 private:
-    vector<int> nextSmallerElement(vector<int> arr, int n)
-    {
+    vector<int> nextSmallerElement(vector<int> arr, int n) {
         stack<int> stk;
         stk.push(-1);
         vector<int> ans(n);
 
-        for (int i = n - 1; i >= 0; i--)
-        {
+        for (int i = n - 1; i >= 0; i--) {
             int curr = arr[i];
-            while (stk.top() != -1 && arr[stk.top()] >= curr)
-            {
+            while (stk.top() != -1 && arr[stk.top()] >= curr) {
                 stk.pop();
             }
             // now top < curr
@@ -25,17 +21,14 @@ private:
         }
         return ans;
     }
-    vector<int> prevSmallerElement(vector<int> arr, int n)
-    {
+    vector<int> prevSmallerElement(vector<int> arr, int n) {
         stack<int> stk;
         stk.push(-1);
         vector<int> ans(n);
 
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             int curr = arr[i];
-            while (stk.top() != -1 && arr[stk.top()] >= curr)
-            {
+            while (stk.top() != -1 && arr[stk.top()] >= curr) {
                 stk.pop();
             }
             // now top < curr
@@ -46,8 +39,7 @@ private:
     }
 
 public:
-    int largestRectangleArea(vector<int> &heights)
-    {
+    int largestRectangleArea(vector<int>& heights) {
         int n = heights.size();
 
         vector<int> next(n);
@@ -56,13 +48,12 @@ public:
         vector<int> prev(n);
         prev = prevSmallerElement(heights, n);
 
-        int area = -50;
+        int area = INT32_MIN;
 
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             int l = heights[i];
-            if (next[i] == -1)
-            {
+            // for same breadth
+            if (next[i] == -1) {
                 next[i] = n;
             }
             int b = next[i] - prev[i] - 1;
@@ -75,7 +66,7 @@ public:
 };
 
 int main() {
-    vector<int> v = {500000,56200516,6116165};
+    vector<int> v = { 500000,56200516,6116165 };
     Solution s;
     cout << s.largestRectangleArea(v) << endl;
 }

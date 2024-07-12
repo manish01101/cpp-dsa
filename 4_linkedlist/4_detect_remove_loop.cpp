@@ -67,19 +67,19 @@ step 2: after floyd detection (i.e slow==fast)
 */
 
 Node* getStartingNode(Node* head) {
-  if(head == nullptr)
+  if (head == nullptr)
     return head;
-  
+
   Node* interSectionNode = floydDetect(head);
 
-  if(interSectionNode != nullptr) { // loop present
+  if (interSectionNode != nullptr) { // loop present
     Node* slow = head;
     Node* fast = interSectionNode;
-    while(slow != fast){
+    while (slow != fast) {
       slow = slow->next;
       fast = fast->next;
     }
-    if(slow == fast) {
+    if (slow == fast) {
       return slow;
     }
   }
@@ -90,17 +90,17 @@ Node* getStartingNode(Node* head) {
 
 // remove cycle
 void removeLoop(Node* head) {
-  if(head == nullptr) {
+  if (head == nullptr) {
     return;
   }
 
   Node* startofLoop = getStartingNode(head);
-  if(startofLoop == nullptr) {
+  if (startofLoop == nullptr) {
     return;
   }
   Node* temp = startofLoop;
 
-  while(temp->next != startofLoop) {
+  while (temp->next != startofLoop) {
     temp = temp->next;
   }
   temp->next = nullptr;

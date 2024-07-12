@@ -8,13 +8,11 @@ NodeTemplate<T>* solve(NodeTemplate<T>* first, NodeTemplate<T>* second) {
     return first;
   }
 
-
-
   NodeTemplate* <T> curr1 = first;
   NodeTemplate* <T> next1 = curr1->next;
   NodeTemplate* <T> curr2 = second;
   NodeTemplate* <T> next2 = curr2->next;
-
+  // insert secondLL node in b/w firstLL nodes
   while (next1 != nullptr && curr2 != nullptr) {
     if (curr2->data >= curr1->data && curr2->data <= next1->data) {
       curr1->next = curr2;

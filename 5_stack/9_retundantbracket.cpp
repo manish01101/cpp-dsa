@@ -2,21 +2,22 @@
 #include<stack>
 using namespace std;
 
-bool findRetundant(string &s) {
+bool findRetundant(string& s) {
     stack<char> stk;
-    for(int i = 0; i < s.length(); i++) {
+    for (int i = 0; i < s.length(); i++) {
         char ch = s[i];
+
         //if opening bracket or operator
-        if(ch == '(' || ch == '+' || ch == '-' || ch == '*' || ch == '/' ) {
+        if (ch == '(' || ch == '+' || ch == '-' || ch == '*' || ch == '/') {
             stk.push(ch);
         }
-        //closing bracket / lowercase letter
+        //closing bracket or lowercase letter
         else {
-            if(ch == ')') {
+            if (ch == ')') {
                 bool isRetundant = true;
-                while(stk.top() != '(') {
+                while (stk.top() != '(') {
                     char top = stk.top();
-                    if (top == '+' || top == '-' || top == '*' || top == '/'  ) {
+                    if (top == '+' || top == '-' || top == '*' || top == '/') {
                         isRetundant = false;
                     }
                     stk.pop(); //removing operator

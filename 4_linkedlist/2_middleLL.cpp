@@ -9,11 +9,6 @@ Node* getMiddle(Node* head) {
     return head;
   }
 
-  // 2 nodes
-  if (head->next->next == nullptr) {
-    return head->next;
-  }
-
   Node* slow = head;
   Node* fast = head->next;
 
@@ -23,6 +18,17 @@ Node* getMiddle(Node* head) {
       fast = fast->next;
     }
     slow = slow->next;
+  }
+  return slow;
+}
+
+Node* getMiddle(Node* head) {
+  Node* slow = head;
+  Node* fast = head->next;
+
+  while (fast != nullptr && fast->next != nullptr) {
+    slow = slow->next;
+    fast = fast->next->next;
   }
   return slow;
 }

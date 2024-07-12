@@ -3,8 +3,8 @@ using namespace std;
 
 class NStack {
     int *arr;
-    int *top;
-    int *next;
+    int *top; // represent index of top ele
+    int *next; // point to next ele after stack top and point to next free space
     int n, s;
     int freespot;
     
@@ -17,18 +17,18 @@ class NStack {
         top = new int[n];
         next = new int[s];
 
-        //initializing top
+        //initializing top with -1
         for(int i = 0; i<n; i++) {
             top[i] = -1;
         }
-        //initializing next
+        //initializing next with next index of arr
         for(int i = 0; i<s; i++) {
             next[i] = i+1;
         }
         //update last index value to -1
         next[s-1] = -1;
         
-        //initialize freespot
+        //initialize freespot: show starting index of next
         freespot = 0;
     }
     
@@ -39,19 +39,19 @@ class NStack {
             return false;
         }
 
-        //find index
+        //step 1: find index
         int index = freespot;
 
-        //update freespot
+        //step 2: update freespot
         freespot = next[index];
 
-        //insert element into array
+        //step 3: insert element into array
         arr[index] = x;
 
-        //update next
+        //step 4: update next
         next[index] = top[m-1];
 
-        //update top
+        //step 5: update top
         top[m-1] = index;
 
         return true; 

@@ -2,10 +2,11 @@
 using namespace std;
 
 class Stack {
-    public:
+public:
     //properties
-    int *arr;
-    int top, size;
+    int* arr;
+    int top;
+    int size;
     //behaviour
     Stack(int size) {
         this->size = size;
@@ -23,7 +24,7 @@ class Stack {
         }
     }
     void pop() {
-        if(top >= 0) {
+        if (top >= 0) {
             top--;
         }
         else {
@@ -31,18 +32,18 @@ class Stack {
         }
     }
     bool isEmpty() {
-        if(top == -1) {
+        if (top == -1) {
             return true;
         }
-        else 
+        else
             return false;
     }
     int peek() {
-        if(top > -1) {
+        if (top > -1) {
             return arr[top];
         }
         else {
-            cout << "stack is empty " ;
+            cout << "stack is empty ";
             return -1;
         }
     }

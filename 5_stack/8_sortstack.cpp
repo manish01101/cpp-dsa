@@ -2,9 +2,9 @@
 #include<stack>
 using namespace std;
 
-void sortedInserting(stack<int> &stk, int element) {
+void sortedInserting(stack<int>& stk, int element) {
     //base case
-    if(stk.empty() || (!stk.empty() && stk.top() < element)) {
+    if (stk.empty() || (!stk.empty() && stk.top() < element)) {
         stk.push(element);
         return;
     }
@@ -19,9 +19,9 @@ void sortedInserting(stack<int> &stk, int element) {
     stk.push(num);
 }
 
-void sortStack(stack<int> &stk) {
+void sortStack(stack<int>& stk) {
     //base case
-    if(stk.empty()){
+    if (stk.empty()) {
         return;
     }
     //operation
@@ -43,7 +43,7 @@ int main() {
     stk.push(3);
 
     //printing orginal stack
-    while(!stk.empty()) {
+    while (!stk.empty()) {
         cout << stk.top() << endl;
         stk.pop();
     }
@@ -57,7 +57,7 @@ int main() {
     sortStack(stk);
 
     //printing orginal stack
-    while(!stk.empty()) {
+    while (!stk.empty()) {
         cout << stk.top() << endl;
         stk.pop();
     }

@@ -74,5 +74,6 @@ Node* sortList(Node* head) {
   delete zeroHead;
   delete oneHead;
   delete twoHead;
+
   return head;
 }

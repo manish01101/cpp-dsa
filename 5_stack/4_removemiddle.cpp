@@ -2,9 +2,9 @@
 #include<stack>
 using namespace std;
 
-void solve(stack <int> &s, int size, int count) {
+void solve(stack <int>& s, int size, int count) {
     //base case
-    if(count == size/2) {
+    if (count == size / 2) {
         s.pop();
         return;
     }
@@ -12,9 +12,9 @@ void solve(stack <int> &s, int size, int count) {
     s.pop();
 
     //recursive call
-    solve(s, size, count+1);
+    solve(s, size, count + 1);
 
-    //operation-adding popped element
+    //operation: adding popped element
     s.push(num);
 }
 
@@ -33,10 +33,9 @@ int main() {
 
     int size = 5;
     int count = 0;
-
     solve(s, size, count);
 
-    while(!s.empty()) {
+    while (!s.empty()) {
         cout << s.top() << endl;
         s.pop();
     }
