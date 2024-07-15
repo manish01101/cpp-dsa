@@ -10,26 +10,26 @@ int main() {
     cout << "enter choice 1 to push : ";
     cin >> choice;
     cout << endl;
-    while(choice) {
+    while (choice) {
         int n;
-        cout << "enter element : " ;
+        cout << "enter element : ";
         cin >> n; cout << endl;
         q.push(n);
-         cout << "enter choice 1 to push : ";
+        cout << "enter choice 1 to push : ";
         cin >> choice;
     }
     cout << "reversing queue : " << endl;
-    while(!q.empty()) {
+    while (!q.empty()) {
         s.push(q.front());
         q.pop();
     }
-    while(!s.empty()) {
+    while (!s.empty()) {
         q.push(s.top());
         s.pop();
     }
     cout << "printing reverse queue : " << endl;
-    while(!q.empty()) {
+    while (!q.empty()) {
         cout << q.front() << " ";
         q.pop();
-    }
+    }cout << endl;
 }

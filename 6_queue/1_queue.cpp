@@ -10,48 +10,50 @@ class Queue {
     int rear;
     int size;
 
-    public:
-    Queue() {
-        size = 10001;
+public:
+    Queue(int size) {
+        this->size = size;
         arr = new int[size];
         front = 0;
         rear = 0;
     }
     //push operation
     void enqueue(int data) {
-        if(rear == size)
+        if (rear == size)
             cout << "queue is full" << endl;
         else
-            arr[ rear++] = data;
+            arr[rear++] = data;
     }
     //pop operation
     int dequeue() {
-        if(front == rear)
+        if (front == rear)
             return -1;
         else {
             int ans = arr[front];
             arr[front++] = -1;
-            if(front == rear) // to avoid memory wastage
+            if (front == rear) { // to avoid memory wastage
                 front = 0, rear = 0;
+            }
+
             return ans;
         }
     }
     int frontElement() {
-        if(front == rear) 
+        if (front == rear)
             return -1;
         else
             return arr[front];
     }
     bool isEmpty() {
-        if(front == rear)
+        if (front == rear)
             return true;
-        else 
+        else
             return false;
     }
 };
 
 int main() {
-    Queue q;
+    Queue q(50);
     q.enqueue(234);
     cout << q.frontElement() << endl;
     q.dequeue();
@@ -66,7 +68,7 @@ int main() {
     // cout << q.front() << endl;
     // q.pop();
     // cout << q.front() << endl;
-    
+
     // cout << "size of queue is : "<<q.size() << endl;
     // cout << q.empty() << endl;
 
@@ -75,5 +77,5 @@ int main() {
     //     cout << q.front() << " ";
     //     q.pop();
     // }
-    
+
 }
