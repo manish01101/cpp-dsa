@@ -1,12 +1,11 @@
-#include<iostream>
-using namespace std;
+#include "0.hpp"
 
 class Solution {
-    public:
-    void solve(node* root, int sum, int &maxSum, int len, int &maxLen) {
+public:
+    void solve(node* root, int sum, int& maxSum, int len, int& maxLen) {
         //base case
-        if(root == NULL) {
-            if(len > maxLen) {
+        if (root == NULL) {
+            if (len > maxLen) {
                 maxLen = len;
                 maxSum = sum;
             }
@@ -15,17 +14,17 @@ class Solution {
             }
         }
         sum += root->data;
-        solve(root->left, sum, maxSum, len+1, maxLen);
-        solve(root->right, sum, maxSum, len+1, maxLen);
+        solve(root->left, sum, maxSum, len + 1, maxLen);
+        solve(root->right, sum, maxSum, len + 1, maxLen);
     }
 
-    int sumOfLongRootToLeafPath(node* root ){
+    int sumOfLongRootToLeafPath(node* root) {
         int len = 0;
         int maxLen = 0;
 
         int sum = 0;
         int maxSum = INT_MIN;
-        
+
         solve(root, sum, maxSum, len, maxLen);
         return maxSum;
     }
