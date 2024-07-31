@@ -1,30 +1,38 @@
+#include "0.hpp"
+/*
+approach 1;
+for each node check whether make valid bst if yes store size
+isBST  tc: O(n2)
 
+for valid bst
+    -> check for left subtree
+    -> check for right subtree
+    -> max of left < root->data < min of right
+
+approach 2: tc: O(n)
+*/
 // tc - O(n)
-class info {
-    public:
+struct info {
     int maxi;
     int mini;
     bool isBST;
     int size;
-};
+} typedef info;
 
-info solve(TreeNode<int> *root, int &ans) {
-
+info solve(Node* root, int& ans) {
     //base case
-    if(root == NULL) {
-        return {INT_MIN, INT_MAX, true, 0};
+    if (root == NULL) {
+        return { INT_MIN, INT_MAX, true, 0 };
     }
 
     info left = solve(root->left, ans);
     info right = solve(root->right, ans);
 
     info currNode;
-
     currNode.size = left.size + right.size + 1;
     currNode.maxi = max(root->data, right.maxi);
     currNode.mini = min(root->data, left.mini);
-
-    if(left.isBST && right.isBST && (root->data > left.maxi && root->data < right.mini)) {
+    if (left.isBST && right.isBST && (root->data > left.maxi && root->data < right.mini)) {
         currNode.isBST = true;
     }
     else {
@@ -32,14 +40,14 @@ info solve(TreeNode<int> *root, int &ans) {
     }
 
     // answer update
-    if(currNode.isBST){
+    if (currNode.isBST) {
         ans = max(ans, currNode.size);
     }
     return currNode;
 }
 
 
-int largestBST(TreeNode<int> *root) {
+int largestBST(Node* root) {
     int maxSize = 0;
     info temp = solve(root, maxSize);
     return maxSize;

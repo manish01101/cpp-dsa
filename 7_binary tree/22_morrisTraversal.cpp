@@ -4,7 +4,6 @@ void morrisTarversal(node* root) { // TC: O(N) sc: o(1)
     if (root == nullptr) return;
 
     node* curr = root;
-    node* pre = nullptr;
     while (curr != nullptr) {
         if (curr->left == nullptr) {
             cout << curr->data << " ",
@@ -12,7 +11,7 @@ void morrisTarversal(node* root) { // TC: O(N) sc: o(1)
         }
         else {
             // find the inorder predecessor of curr
-            pre = curr->left;
+            node* pre = curr->left;
             while (pre->right != nullptr && pre->right != curr) {
                 pre = pre->right;
             }
