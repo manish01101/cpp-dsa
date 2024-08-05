@@ -9,7 +9,7 @@ int maxFreq(vector<int> &arr, int n) {
 
     int maxFreq = 0;
     int maxAns = 0;
-
+    
     for(int i=0; i<arr.size(); i++) {
         m[arr[i]]++;
         maxFreq = max(maxFreq, m[arr[i]]);

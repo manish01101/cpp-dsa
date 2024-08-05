@@ -2,7 +2,10 @@
 #include<map>
 #include<unordered_map>
 using namespace std;
-
+/*
+map use bst tc: log n
+unordered_map use hashing tc: constant
+*/
 int main() {
     
     //creation
@@ -18,17 +21,17 @@ int main() {
     m.insert(p2);
 
     // way 3 : for same key
-    m["mera"] = 1; //first time-creation
-    m["mera"] = 2; //next time - updation
+    m["man"] = 1; //first time - creation
+    m["man"] = 2; //next time - updation
 
     //search
-    cout << m["mera"] << endl;
+    cout << m["man"] << endl;
     cout << m.at("manish") << endl;
 
     // cout << m.at("unknownkey") << endl; //error
     cout << m["unknownkey"] << endl; //it will make entry
 
-    // now it throw - 0 as output as it makes entry in line 29
+    // now it throw - 0 as output as it makes entry in line 30
     cout << m.at("unknownkey") << endl;
 
     //size
