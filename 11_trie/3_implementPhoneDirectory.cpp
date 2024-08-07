@@ -2,20 +2,23 @@
 #include<vector>
 
 using namespace std;
-
+/*
+tc: o(n*m2), sc: o(n*m)
+*/
 
 // using trie
 class TrieNode {
-    public:
+public:
     char data;
     TrieNode* children[26];
     int childCount;
     bool isTerminal;
 
-    TrieNode(char ch)  {
+    TrieNode(char ch) {
         data = ch;
-        for(int i=0; i<26; i++)
-            children[i] = NULL;
+        for (int i = 0; i < 26; i++) {
+            children[i] = nullptr;
+        }
         childCount = 0;
         isTerminal = false;
     }
@@ -28,7 +31,7 @@ public:
     }
     void insertUtil(TrieNode* root, string word) {
         //base case
-        if(word.length() == 0) {
+        if (word.length() == 0) {
             root->isTerminal = true;
             return;
         }
@@ -37,7 +40,7 @@ public:
         TrieNode* child;
 
         // char is present
-        if(root->children[index] != NULL) {
+        if (root->children[index] != nullptr) {
             child = root->children[index];
         }
         // char is absent
@@ -49,7 +52,7 @@ public:
 
         //recursion
         insertUtil(child, word.substr(1));
-        
+
     }
     // T.C INSERT O(LENGTH OF WORD)
     void insertWord(string word) {
@@ -58,17 +61,15 @@ public:
 
 
 
-    void printSuggestions(TrieNode* curr, vector<string> &temp, string prefix) {
-        if(curr->isTerminal) {
+    void printSuggestions(TrieNode* curr, vector<string>& temp, string prefix) {
+        if (curr->isTerminal) {
             temp.push_back(prefix);
-            // hw ques: why we remove return keyword
-            // return;
         }
 
-        for(char ch='a'; ch <= 'z'; ch++) {
-            TrieNode* next = curr->children[ch-'a'];
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            TrieNode* next = curr->children[ch - 'a'];
 
-            if(next != NULL) {
+            if (next != nullptr) {
                 prefix.push_back(ch);
                 printSuggestions(next, temp, prefix);
                 prefix.pop_back();
@@ -81,16 +82,17 @@ public:
         vector<vector<string>> output;
         string prefix = "";
 
-        for(int i=0; i<str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
             char lastch = str[i];
 
             prefix.push_back(lastch);
 
             //check for last char
-            TrieNode* curr = prev->children[lastch-'a'];
+            TrieNode* curr = prev->children[lastch - 'a'];
 
             //if not found
-            if(curr == NULL) break;
+            if (curr == nullptr)
+                break;
             //if found
             vector<string> temp;
             printSuggestions(curr, temp, prefix);
@@ -103,13 +105,13 @@ public:
     }
 };
 
-vector<vector<string>> phoneDirectory(vector<string> &contactList, string &queryStr) {
+vector<vector<string>> phoneDirectory(vector<string>& contactList, string& queryStr) {
 
     //creation of trie
-    Trie *t = new Trie();
+    Trie* t = new Trie('\0');
 
     //insert all contact in trie
-    for(int i=0; i<contactList.size(); i++) {
+    for (int i = 0; i < contactList.size(); i++) {
         string str = contactList[i];
         t->insertWord(str);
     }
