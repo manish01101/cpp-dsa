@@ -1,7 +1,14 @@
 #include<iostream>
 #include<vector>
 using namespace std;
+/*
+condition:
+each row and col has one queen
+no two queen attack each other
 
+tc: n!
+sc: n*n
+*/
 void addSolution(vector<vector<int>>& ans, vector<vector<int>>& board, int n) {
     vector<int> temp;
     for (int i = 0; i < n; i++) {
@@ -64,7 +71,7 @@ void solve(int col, vector<vector<int>>& ans, vector<vector<int>>& board, int n)
 vector<vector<int>> nQueens(int n) {
     vector<vector<int>> board(n, vector<int>(n, 0));
     vector<vector<int>> ans;
-
-    solve(0, ans, board, n);
+    int col = 0;
+    solve(col, ans, board, n);
     return ans;
 }

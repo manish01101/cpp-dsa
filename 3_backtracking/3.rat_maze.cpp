@@ -9,6 +9,9 @@ after each move
     visited[k][l] = true
 when fn call returns
     visited[k][l] = false (backtrack)
+
+tc: 4^(n*n)
+sc: O(n*n)
 */
 
 #include<iostream>
@@ -16,9 +19,8 @@ when fn call returns
 using namespace std;
 
 
-// practice by own
-bool isSafeToMove(vector<vector<int>>& m, int n, int x, int y, vector<vector<int>> visited) {
-    if ((x >= 0 && x < n) && (y >= 0 && y < n) && m[x][y] == 1 && visited[x][y] == 0) {
+bool isSafeToMove(vector<vector<int>>& matrix, int n, int x, int y, vector<vector<bool>>& visited) {
+    if ((x >= 0 && x < n) && (y >= 0 && y < n) && matrix[x][y] == 1 && visited[x][y] == 0) {
         return true;
     }
     else {
@@ -26,7 +28,7 @@ bool isSafeToMove(vector<vector<int>>& m, int n, int x, int y, vector<vector<int
     }
 }
 
-void solvefn(vector<vector<int>>& m, int n, int x, int y, vector<vector<int>> visited, string path, vector<string>& ans) {
+void solvefn(vector<vector<int>>& matrix, int n, int x, int y, vector<vector<bool>>& visited, string path, vector<string>& ans) {
     // base case
     if (x == n - 1 && y == n - 1) {
         ans.push_back(path);
@@ -34,52 +36,52 @@ void solvefn(vector<vector<int>>& m, int n, int x, int y, vector<vector<int>> vi
     }
     visited[x][y] = true;
     // now check for move: down, up, left, right
+    // for lexicographical order -> process down, left, right, up serial wise so, no need to sort
     // for down
     int newx = x + 1;
     int newy = y;
-    if (isSafeToMove(m, n, newx, newy, visited)) {
+    if (isSafeToMove(matrix, n, newx, newy, visited)) {
         path.push_back('D');
-        solvefn(m, n, newx, newy, visited, path, ans);
-        path.pop_back(); // backtrack
-    }
-    // up
-    newx = x - 1;
-    newy = y;
-    if (isSafeToMove(m, n, newx, newy, visited)) {
-        path.push_back('U');
-        solvefn(m, n, newx, newy, visited, path, ans);
+        solvefn(matrix, n, newx, newy, visited, path, ans);
         path.pop_back(); // backtrack
     }
     // left
     newx = x;
     newy = y - 1;
-    if (isSafeToMove(m, n, newx, newy, visited)) {
-        path.push_back('L');
-        solvefn(m, n, newx, newy, visited, path, ans);
-        path.pop_back(); // backtrack
+    if (isSafeToMove(matrix, n, newx, newy, visited)) {
+        solvefn(matrix, n, newx, newy, visited, path + 'L', ans);
     }
     // right
     newx = x;
     newy = y + 1;
-    if (isSafeToMove(m, n, newx, newy, visited)) {
+    if (isSafeToMove(matrix, n, newx, newy, visited)) {
         path.push_back('R');
-        solvefn(m, n, newx, newy, visited, path, ans);
+        solvefn(matrix, n, newx, newy, visited, path, ans);
+        path.pop_back(); // backtrack
+    }
+    // up
+    newx = x - 1;
+    newy = y;
+    if (isSafeToMove(matrix, n, newx, newy, visited)) {
+        path.push_back('U');
+        solvefn(matrix, n, newx, newy, visited, path, ans);
         path.pop_back(); // backtrack
     }
 }
 
-vector<string> findallpath(vector<vector<int>>& m, int n) {
+vector<string> findallpath(vector<vector<int>>& matrix, int n) {
     vector<string> ans;
-    if (m[0][0] == 0) {
+    if (matrix[0][0] == 0) {
         return ans;
     }
     int srcx = 0, srcy = 0;
 
-    vector<vector<int>> visited(n, vector<int>(n, 0));
+    vector<vector<bool>> visited(n, vector<bool>(n, 0));
 
     string path = "";
 
-    solvefn(m, n, srcx, srcy, visited, path, ans);
-    sort(ans.begin(), ans.end());
+    solvefn(matrix, n, srcx, srcy, visited, path, ans);
+    // process down, left, right, up serial wise so, no need to sort
+    // sort(ans.begin(), ans.end());
     return ans;
 }
