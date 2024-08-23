@@ -9,9 +9,10 @@ using namespace std;
 
 /*
 dijkstra algo not work on -ve weight
+used to find the shortest paths from a source node to all other nodes in a weighted graph. It is particularly efficient for graphs with non-negative edge weights.
 */
 
-// TC: O(E log V)
+/* USING SET => TC: O((V+E)logV),  sc: O(V+E) */
 vector<int> Dijkstra(vector<vector<int>>& vec, int vertices, int edges, int source) {
     // create adj list
     unordered_map<int, list<pair<int, int>>> adjList;
@@ -28,9 +29,10 @@ vector<int> Dijkstra(vector<vector<int>>& vec, int vertices, int edges, int sour
     // set for storing <min_dist,  node_val>
     set<pair<int, int>> st;
 
-    // process, initialize distance and set with source node
+    // process: initialize distance and set with source node
     dist[source] = 0;
     st.insert(make_pair(dist[source], source));
+
     while (!st.empty()) {
         auto temp = *(st.begin());
         st.erase(st.begin());
@@ -55,9 +57,9 @@ vector<int> Dijkstra(vector<vector<int>>& vec, int vertices, int edges, int sour
     return dist;
 }
 
-
+/* USING MIN HEAP => Time Complexity: O((V+E)logV) Space Complexity: O(V+E)*/
 vector <int> dijkstra(int V, vector<vector<int>> adj[], int S) {
-    // dist array and set for stoting (dist[node), node
+    // dist array and set for stoting <dist[node], node>
     vector<int> dist(V, INT_MAX);
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
@@ -77,18 +79,11 @@ vector <int> dijkstra(int V, vector<vector<int>> adj[], int S) {
             int neighbourWeight = neighbour[1];
 
             if (tempWeight + neighbourWeight < dist[neighbourNode]) {
-                // first delete the old record for that node
-                // auto oldRecord = st.find(make_pair(dist[neighbour[0]], neighbour[0]));
-                // if (oldRecord != st.end()) {
-                //     st.erase(oldRecord);
-                // }
-
                 // update distance
                 dist[neighbourNode] = tempWeight + neighbourWeight;
 
                 pq.push({ dist[neighbourNode], neighbourNode });
             }
-
         }
     }
     return dist;

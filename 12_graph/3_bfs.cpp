@@ -21,10 +21,9 @@ void prepareAdjList(unordered_map<int, list<int> >& adjList, vector<pair<int, in
 }
 
 void bfs(unordered_map<int, list<int> >& adjList, unordered_map<int, bool>& visited, vector<int>& ans, int node) {
-
     queue<int> q;
     q.push(node);
-    visited[node] = 1;
+    visited[node] = true;
 
     while (!q.empty()) {
         int frontNode = q.front();
@@ -37,13 +36,13 @@ void bfs(unordered_map<int, list<int> >& adjList, unordered_map<int, bool>& visi
         for (auto i : adjList[frontNode]) {
             if (!visited[i]) {
                 q.push(i);
-                visited[i] = 1;
+                visited[i] = true;
             }
         }
     }
 }
+// main fn
 vector<int> BFS(int vertex, vector<pair<int, int> > edges) {
-
     unordered_map<int, list<int> > adjList;
     vector<int> ans;
     unordered_map<int, bool> visited;

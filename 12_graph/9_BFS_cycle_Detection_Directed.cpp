@@ -15,7 +15,7 @@ therefore, cyclic graph -> invalid topological sort
 */
 
 // TC: O(V + E) , SC: O(V + E)
-int detectCycleInDirectedGraph(int n, vector<pair<int, int>>& edges) {
+bool detectCycleInDirectedGraph(int n, vector<pair<int, int>>& edges) {
     // creating adj list
     unordered_map<int, list<int>> adj;
     for (int i = 0; i < edges.size(); i++) {

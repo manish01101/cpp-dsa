@@ -14,11 +14,11 @@ topological sort-> linear ordering of vertices such that for every edge u-v, u a
 */
 
 
-void topoSort(int node, unordered_map<int, list<int>>& adjList, unordered_map<int, bool>& isVisited, stack<int>& s) {
+void dfsTopoSort(int node, unordered_map<int, list<int>>& adjList, unordered_map<int, bool>& isVisited, stack<int>& s) {
     isVisited[node] = true;
     for (auto neighbour : adjList[node]) {
         if (!isVisited[neighbour]) {
-            topoSort(neighbour, adjList, isVisited, s);
+            dfsTopoSort(neighbour, adjList, isVisited, s);
         }
     }
     s.push(node);
@@ -32,12 +32,12 @@ vector<int> topologicalSort(vector<vector<int>>& edges, int v, int e) {
         adjList[u].push_back(v);
     }
 
-    unordered_map<int, bool> isVisted;
+    unordered_map<int, bool> isVisited;
     stack<int> s;
     // dfs call for topological solr
     for (int node = 0; node < v; node++) {
-        if (!isVisted[node]) {
-            topoSort(node, adjList, isVisted, s);
+        if (!isVisited[node]) {
+            dfsTopoSort(node, adjList, isVisited, s);
         }
     }
 

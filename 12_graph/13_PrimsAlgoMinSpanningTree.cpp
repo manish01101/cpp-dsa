@@ -41,15 +41,15 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
                 miniWeight = weight[v];
             }
         }
-        // STEP 2: mark min node as true;
+        // STEP 2: mark visited of min node as true;
         isNodeInMstVisited[node] = true;
         // STEP 3: check its adjacent nodes
         for (auto it : adj[node]) {
             int neighbourNode = it.first;
             int neighbourWeight = it.second;
             if (isNodeInMstVisited[neighbourNode] == false && neighbourWeight < weight[neighbourNode]) {
-                parent[neighbourNode] = node;
                 weight[neighbourNode] = neighbourWeight;
+                parent[neighbourNode] = node;
             }
         }
     }
@@ -65,7 +65,7 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
 
 
 
-
+/* USING MIN HEAP */
 vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>>& g) {
     // create adj list
     unordered_map<int, list<pair<int, int>>> adj;
@@ -105,8 +105,8 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
             int neighbourWeight = it.second;
 
             if (isNodeInMstVisited[neighbourNode] == false && neighbourWeight < weight[neighbourNode]) {
-                parent[neighbourNode] = node;
                 weight[neighbourNode] = neighbourWeight;
+                parent[neighbourNode] = node;
                 pq.push({ weight[neighbourNode], neighbourNode });
             }
         }

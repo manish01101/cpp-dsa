@@ -52,9 +52,9 @@ void unionSet(int u, int v, vector<int>& parent, vector<int>& rank) {
 }
 
 /*
-kruskal algo 
+kruskal algo
 -> no need of adj list, instead use linear data str.
--> that data str. store (weight, u, v) 
+-> that data str. store (weight, u, v)
 -> sort them
 -> if two node's parent belongs to different component -> merge them
 -> if they belongs to same component -> ignore

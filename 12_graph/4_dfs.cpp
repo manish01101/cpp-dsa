@@ -23,7 +23,7 @@ void dfs(int node, unordered_map<int, bool>& visited, unordered_map<int, list<in
     }
 }
 
-vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>>& edges) {
+vector<vector<int>> DFS(int V, int E, vector<vector<int>>& edges) {
     //prepare adjlist
     unordered_map<int, list<int>> adj;
     for (int i = 0; i < edges.size(); i++) {
