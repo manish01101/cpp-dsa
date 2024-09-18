@@ -38,9 +38,9 @@ int aggressiveCows(vector<int>& stalls, int k) {
     }
     int e = maxi;
     int ans = -1;
-    int mid = (s + e) / 2;
 
     while (s <= e) {
+        int mid = (s + e) / 2;
         if (isPossible(stalls, k, mid)) {
             ans = mid;
             s = mid + 1;

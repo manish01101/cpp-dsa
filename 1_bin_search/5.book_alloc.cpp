@@ -47,9 +47,9 @@ int allocateBooks(int arr[], int n, int m) {
     }
     int e = sum;
     int ans = -1;
-    int mid = (s + e) / 2;
 
     while (s <= e) {
+        int mid = (s + e) / 2;
         if (isPossible(arr, n, m, mid)) {
             ans = mid;
             e = mid - 1; //for min
