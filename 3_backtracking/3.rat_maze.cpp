@@ -67,6 +67,7 @@ void solvefn(vector<vector<int>>& matrix, int n, int x, int y, vector<vector<boo
         solvefn(matrix, n, newx, newy, visited, path, ans);
         path.pop_back(); // backtrack
     }
+    visited[x][y] = false; // backtrack
 }
 
 vector<string> findallpath(vector<vector<int>>& matrix, int n) {
