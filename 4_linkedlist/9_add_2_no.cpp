@@ -84,5 +84,5 @@ Node* addTwoLists(Node* first, Node* second) {
   Node* ans = add(first, second);
 
   // step 3: reverse
-  ans = reverse(ans);
+  return ans = reverse(ans);
 }

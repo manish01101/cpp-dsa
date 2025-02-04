@@ -2,57 +2,57 @@
 
 // circular or not
 bool isCircularList(Node* head) {
-  // empty list
-  if (head == nullptr) {
-    return true;
-  }
-  Node* temp = head->next;
-  while (temp != nullptr && temp != head) {
-    temp = temp->next;
-  }
-  if (temp == head) {
-    return true;
-  }
-  return false;
+    // empty list
+    if (head == nullptr) {
+        return true;
+    }
+    Node* temp = head->next;
+    while (temp != nullptr && temp != head) {
+        temp = temp->next;
+    }
+    if (temp == head) {
+        return true;
+    }
+    return false;
 }
 
 // detect cycle tc:(n) sc:(n)
 bool detectLoop(Node* head) {
-  if (head == nullptr) {
-    return false;
-  }
-  map<Node*, bool> visited;
-  Node* temp = head;
-  while (temp != nullptr) {
-    // cycle is present
-    if (visited[temp] == true) {
-      return true;
+    if (head == nullptr) {
+        return false;
     }
-    visited[temp] = true;
-    temp = temp->next;
-  }
-  return false;
+    map<Node*, bool> visited;
+    Node* temp = head;
+    while (temp != nullptr) {
+        // cycle is present
+        if (visited[temp] == true) {
+            return true;
+        }
+        visited[temp] = true;
+        temp = temp->next;
+    }
+    return false;
 }
 
 // floyd detection tc:(n) sc: 1
 Node* floydDetect(Node* head) {
-  if (head == nullptr)
+    if (head == nullptr)
+        return nullptr;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (slow != nullptr && fast != nullptr) {
+        slow = slow->next;
+        fast = fast->next;
+        if (fast != nullptr) {
+            fast = fast->next;
+        }
+        if (slow == fast) {
+            return slow;
+        }
+    }
     return nullptr;
-
-  Node* slow = head;
-  Node* fast = head;
-
-  while (slow != nullptr && fast != nullptr) {
-    slow = slow->next;
-    fast = fast->next;
-    if (fast != nullptr) {
-      fast = fast->next;
-    }
-    if (slow == fast) {
-      return slow;
-    }
-  }
-  return nullptr;
 }
 
 // finding starting node of loop
@@ -67,41 +67,68 @@ step 2: after floyd detection (i.e slow==fast)
 */
 
 Node* getStartingNode(Node* head) {
-  if (head == nullptr)
-    return head;
+    if (head == nullptr)
+        return head;
 
-  Node* interSectionNode = floydDetect(head);
+    Node* interSectionNode = floydDetect(head);
 
-  if (interSectionNode != nullptr) { // loop present
-    Node* slow = head;
-    Node* fast = interSectionNode;
+    if (interSectionNode != nullptr) { // loop present
+        Node* slow = head;
+        Node* fast = interSectionNode;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        if (slow == fast) {
+            return slow;
+        }
+    }
+    else { // no loop present
+        return nullptr;
+    }
+}
+
+ListNode* detectCycle(ListNode* head) {
+    if (!head) return nullptr;
+
+    ListNode* slow = head;
+    ListNode* fast = head;
+
+    while (fast && fast->next) { // floyd algo
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            break;
+        }
+    }
+
+    if (!fast || !fast->next) { // no cycle present
+        return nullptr;
+    }
+
+    slow = head;
     while (slow != fast) {
-      slow = slow->next;
-      fast = fast->next;
+        slow = slow->next;
+        fast = fast->next;
     }
-    if (slow == fast) {
-      return slow;
-    }
-  }
-  else { // no loop present
-    return nullptr;
-  }
+
+    return slow;
 }
 
 // remove cycle
 void removeLoop(Node* head) {
-  if (head == nullptr) {
-    return;
-  }
+    if (head == nullptr) {
+        return;
+    }
 
-  Node* startofLoop = getStartingNode(head);
-  if (startofLoop == nullptr) {
-    return;
-  }
-  Node* temp = startofLoop;
+    Node* startofLoop = getStartingNode(head);
+    if (startofLoop == nullptr) {
+        return;
+    }
+    Node* temp = startofLoop;
 
-  while (temp->next != startofLoop) {
-    temp = temp->next;
-  }
-  temp->next = nullptr;
+    while (temp->next != startofLoop) {
+        temp = temp->next;
+    }
+    temp->next = nullptr;
 }
