@@ -23,12 +23,10 @@ int getSum(int* arr, int size) {
 // linear search
 int linearSearch(int* arr, int size, int key) {
     if (size == 0) return -1;
-    if (size == 1 && arr[0] == key) {
-        return 0;
-    }
-    else {
-        return linearSearch(arr + 1, size - 1, key);
-    }
+    if (arr[0] == key) return 0; 
+
+    int result = linearSearch(arr + 1, size - 1, key);
+    return (result == -1) ? -1 : result + 1;
 }
 
 // binary search

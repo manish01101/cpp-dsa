@@ -7,7 +7,7 @@ find powerset of set
 set: {1,2,3}
 o/p powerset: {{}, {1}, {2}, {3}, {1,2},{2,3},{1,3}, {1,2,3}}
 */
-void solve(vector<int> nums, vector<int> output, int index, vector<vector<int>>& ans) {
+void solve(vector<int> &nums, vector<int> output, int index, vector<vector<int>>& ans) {
     // base case
     if (index >= nums.size()) {
         ans.push_back(output);
@@ -34,5 +34,12 @@ int main() {
     vector<int> nums;
     nums.push_back(1);
     nums.push_back(2);
+    nums.push_back(3);
     vector<vector<int>> ans = subsets(nums);
+    for(auto a : ans) {
+        for(auto b : a) {
+            cout << b << " ";
+        }
+        cout << endl;
+    }
 }
