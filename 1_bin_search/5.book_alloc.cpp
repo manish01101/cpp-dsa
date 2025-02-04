@@ -60,3 +60,43 @@ int allocateBooks(int arr[], int n, int m) {
     }
     return ans;
 }
+
+bool isValid(int maxAllowedPages, int arr[], int n, int k) {
+    int studentCnt = 1;
+    int bookPages = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] > maxAllowedPages) { // pages > maxAllowed
+            return false;
+        }
+        if (bookPages + arr[i] <= maxAllowedPages) {
+            bookPages += arr[i];
+        }
+        else { // allocate to new student
+            studentCnt++;
+            bookPages = arr[i]; // pages assigned to new student
+        }
+    }
+    if (studentCnt > k) return false;
+    return true;
+}
+int findPages(int arr[], int n, int k) {
+    if (n < k) return -1;
+
+    int sumPages = 0;
+    for (int i = 0; i < n; i++) {
+        sumPages += arr[i];
+    }
+
+    int s = 0, e = sumPages, ans = -1;
+    while (s <= e) {
+        int mid = s + (e - s) / 2;
+        if (isValid(mid, arr, n, k)) {
+            ans = mid;
+            e = mid - 1;
+        }
+        else {
+            s = mid + 1;
+        }
+    }
+    return ans;
+}

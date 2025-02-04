@@ -14,12 +14,12 @@ search space:
 #include<iostream>
 #include<vector>
 using namespace std;
-bool isPossible(vector<int>& stalls, int k, int mid) {
+bool isPossible(vector<int>& stalls, int k, int minAllowedDistance) {
     int cowCount = 1;
     int lastPos = stalls[0];
 
     for (int i = 0; i < stalls.size(); i++) {
-        if (stalls[i] - lastPos >= mid) {
+        if (stalls[i] - lastPos >= minAllowedDistance) {
             cowCount++;
             if (cowCount == k) {
                 return true;
@@ -31,12 +31,13 @@ bool isPossible(vector<int>& stalls, int k, int mid) {
 }
 int aggressiveCows(vector<int>& stalls, int k) {
     sort(stalls.begin(), stalls.end());
-    int s = 0;
-    int maxi = -1;
-    for (int i = 0; i < stalls.size(); i++) {
-        maxi = max(maxi, stalls[i]);
-    }
-    int e = maxi;
+    // int s = 0;
+    // int maxi = -1;
+    // for (int i = 0; i < stalls.size(); i++) {
+    //     maxi = max(maxi, stalls[i]);
+    // }
+    // int e = maxi;
+    int s=0, e=stalls[stalls.size()-1]-stalls[0];
     int ans = -1;
 
     while (s <= e) {
