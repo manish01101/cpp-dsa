@@ -52,13 +52,15 @@ public:
 
         for (int i = 0; i < n; i++) {
             int l = heights[i];
+            // cout << next[i] << " " << prev[i] << " ";
             // for same breadth
             if (next[i] == -1) {
                 next[i] = n;
             }
             int b = next[i] - prev[i] - 1;
-
+            // cout << next[i] << " " << prev[i] << " ";
             int newArea = l * b;
+            // cout << newArea << endl;
             area = max(area, newArea);
         }
         return area;
@@ -66,7 +68,7 @@ public:
 };
 
 int main() {
-    vector<int> v = { 500000,56200516,6116165 };
+    vector<int> v = { 5, 10, 7 };
     Solution s;
     cout << s.largestRectangleArea(v) << endl;
 }

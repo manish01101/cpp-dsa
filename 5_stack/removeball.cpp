@@ -23,7 +23,7 @@ public:
         }
         //finding length
         int count = 0;
-        while (!colorstk.empty() && !colorstk.empty()) {
+        while (!colorstk.empty() && !radiusstk.empty()) {
             count++;
             colorstk.pop();
             radiusstk.pop();
