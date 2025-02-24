@@ -11,7 +11,6 @@ public:
     int freespot;
     int* next;
 
-public:
     kQueue(int n, int k) {
         this->n = n;
         this->k = k;
