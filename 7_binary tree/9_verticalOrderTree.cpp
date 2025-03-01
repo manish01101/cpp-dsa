@@ -8,7 +8,7 @@ mapping of horizontal distance with levelwise node
 //vertical order tree
 vector<int> verticalOrder(node* root) {
     // map<horizontal dist, map<level, vector<nodes>>>
-    map<int, map<int, vector<int>>> nodes;
+    map<int, map<int, vector<int>>> mp;
     // queue<pair<node, pair<horizontal dist, level>>>
     queue<pair<node*, pair<int, int>>> q;
     vector<int> ans;
@@ -24,7 +24,7 @@ vector<int> verticalOrder(node* root) {
         int hd = temp.second.first;
         int lvl = temp.second.second;
 
-        nodes[hd][lvl].push_back(frontNode->data);
+        mp[hd][lvl].push_back(frontNode->data);
 
         if (frontNode->left) {
             q.push(make_pair(frontNode->left, make_pair(hd - 1, lvl + 1)));
@@ -33,7 +33,7 @@ vector<int> verticalOrder(node* root) {
             q.push(make_pair(frontNode->right, make_pair(hd + 1, lvl + 1)));
         }
     }
-    for (auto i : nodes) { // i= <hd, <level, vector<nodes>>>
+    for (auto i : mp) { // i= <hd, <level, vector<nodes>>>
         for (auto j : i.second) { // j = <level, vector<nodes>>
             for (auto k : j.second) { // k = vector<nodes>
                 ans.push_back(k);

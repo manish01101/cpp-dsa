@@ -13,7 +13,7 @@ void traverseLeft(node* root, vector<int>& ans) {
     else
         traverseLeft(root->right, ans);
 }
-void  traverseLeaf(node* root, vector<int>& ans) {
+void traverseLeaf(node* root, vector<int>& ans) {
     //base case
     if (root == NULL) return;
     if (root->left == NULL && root->right == NULL) { // leaf node

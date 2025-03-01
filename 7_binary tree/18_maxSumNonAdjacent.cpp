@@ -17,7 +17,7 @@ pair<int, int> solve(Node* root) {
     pair<int, int> left = solve(root->left);
     pair<int, int> right = solve(root->right);
 
-    pair<int, int> result;
+    pair<int, int> result; // pair<include, exclude>
     // include = root->data + child's exclude part
     result.first = root->data + left.second + right.second;
     // exlcude

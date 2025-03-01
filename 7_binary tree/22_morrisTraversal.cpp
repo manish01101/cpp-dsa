@@ -1,12 +1,13 @@
 #include "0.hpp"
 
-void morrisTarversal(node* root) { // TC: O(N) sc: o(1)
+// morris Traversal for inorder traversal
+void morrisTraversal(node* root) { // TC: O(N) sc: o(1)
     if (root == nullptr) return;
 
     node* curr = root;
     while (curr != nullptr) {
         if (curr->left == nullptr) {
-            cout << curr->data << " ",
+            cout << curr->data << " ";
             curr = curr->right;
         }
         else {
