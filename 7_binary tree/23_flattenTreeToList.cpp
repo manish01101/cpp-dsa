@@ -13,7 +13,7 @@ while(curr != null) {
     curr = curr->right
 }
 */
-
+// flattening a binary tree into a linked list in preorder traversal order (root → left → right).
 void flatten(node* root) {
     node* curr = root;
     while (curr != nullptr) {
@@ -29,5 +29,25 @@ void flatten(node* root) {
             curr->left = nullptr;
         }
         curr = curr->right;
+    }
+}
+
+//postorder approach (left → right → root).
+void flatten(node* root) {
+    if (!root) return;
+    
+    flatten(root->left);
+    flatten(root->right);
+    
+    if (root->left) {
+        node* temp = root->right;
+        root->right = root->left;
+        root->left = nullptr;
+        
+        node* last = root->right;
+        while (last->right) {
+            last = last->right;
+        }
+        last->right = temp;
     }
 }
