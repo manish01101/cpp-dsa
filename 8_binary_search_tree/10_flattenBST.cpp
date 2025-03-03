@@ -29,3 +29,38 @@ Node* flat(Node* root) {
 
     return newRoot;
 }
+
+// morris traversal for inorder traversal (used to flatten a bst)
+void flattenToSortedList(node* root) {
+    node* curr = root;
+    node* prev = nullptr;
+    
+    while (curr != nullptr) {
+        if (curr->left) {
+            node* pre = curr->left;
+            while (pre->right) {
+                pre = pre->right;
+            }
+            pre->right = curr;
+            node* temp = curr;
+            curr = curr->left;
+            temp->left = nullptr;
+        } else {
+            if (prev) prev->right = curr;
+            prev = curr;
+            curr = curr->right;
+        }
+    }
+}
+
+// recursive approach
+node* prev = nullptr;
+void flattenBST(node* root) {
+    if (!root) return;
+
+    flattenBST(root->left);  // Left subtree
+    root->left = nullptr;     // Remove left pointer
+    if (prev) prev->right = root;
+    prev = root;
+    flattenBST(root->right); // Right subtree
+}

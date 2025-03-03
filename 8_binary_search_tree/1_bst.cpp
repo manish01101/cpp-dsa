@@ -2,7 +2,7 @@
 
 Node* insertIntoBST(Node* root, int d) {
     //base case
-    if (root == NULL) {
+    if (root == nullptr) {
         root = new Node(d);
         return root;
     }

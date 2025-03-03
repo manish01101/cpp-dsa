@@ -21,7 +21,7 @@ struct info {
 
 info solve(Node* root, int& ans) {
     //base case
-    if (root == NULL) {
+    if (root == nullptr) {
         return { INT_MIN, INT_MAX, true, 0 };
     }
 

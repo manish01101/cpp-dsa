@@ -12,7 +12,7 @@ public:
 	Node* right;
 	Node(int d) { // constructor
 		this->data = d;
-		this->left = NULL;
-		this->right = NULL;
+		this->left = nullptr;
+		this->right = nullptr;
 	}
 };

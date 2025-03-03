@@ -7,7 +7,7 @@ approach 1
     make bst from inorder
 */
 void inorder(Node* root, vector<int>& in) {
-    if (root == NULL)
+    if (root == nullptr)
         return;
     inorder(root->left, in);
     in.push_back(root->data);
@@ -33,7 +33,7 @@ vector<int> mergeArrays(vector<int>& a, vector<int>& b) {
 
 Node* inorderToBST(int s, int e, vector<int>& in) {
     //base case
-    if (s > e) return NULL;
+    if (s > e) return nullptr;
 
     int mid = (s + e) / 2;
     Node* root = new Node(in[mid]);

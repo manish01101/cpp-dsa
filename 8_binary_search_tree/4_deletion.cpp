@@ -8,30 +8,30 @@ Node* minVal(Node* root) {
 }
 Node* deleteFromBST(Node* root, int val) {
     //base case
-    if (root == NULL) return root;
+    if (root == nullptr) return root;
 
     if (root->data == val) {
         // 0 child
-        if (root->left == NULL && root->right == NULL) {
+        if (root->left == nullptr && root->right == nullptr) {
             delete root;
-            return NULL;
+            return nullptr;
         }
         // 1 child
         //left child
-        if (root->left != NULL && root->right == NULL) {
+        if (root->left != nullptr && root->right == nullptr) {
             Node* temp = root->left;
             delete root;
             return temp;
         }
         //right child
-        if (root->left == NULL && root->left != NULL) {
+        if (root->left == nullptr && root->left != nullptr) {
             Node* temp = root->right;
             delete root;
             return temp;
         }
 
         // 2 child
-        if (root->left != NULL && root->right != NULL) {
+        if (root->left != nullptr && root->right != nullptr) {
             int mini = minVal(root->right)->data;
             root->data = mini;
             root->right = deleteFromBST(root->right, mini);

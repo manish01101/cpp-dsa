@@ -3,7 +3,7 @@
 // recursive sol
 int solve(Node* root, int& i, int k) {
     //base case
-    if (root == NULL) {
+    if (root == nullptr) {
         return -1;
     }
     //L
@@ -30,7 +30,7 @@ int kthSmallest(Node* root, int k) {
 int kthSmallest(Node* root, int k) {
     if (root == nullptr) return -1;
     int i = 0;
-    int ans = 0;
+    int ans = -1;
     Node* curr = root;
     while (curr != nullptr) {
         if (curr->left == nullptr) {
