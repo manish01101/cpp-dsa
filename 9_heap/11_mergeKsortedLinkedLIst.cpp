@@ -19,7 +19,7 @@ class ListNode {
 public:
     int val;
     ListNode* next;
-    ListNode(int val) : val{ val }, next(nullptr) {}
+    ListNode(int val) : val(val), next(nullptr) {}
 };
 class compare {
 public:
@@ -30,9 +30,8 @@ public:
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        // using heap
         int k = lists.size();
-        if (k == 0) {
+        if (k == 0) { // no list is present
             return nullptr;
         }
         // creation of minHeap

@@ -44,7 +44,7 @@ int getkthlargest(vector<int>& arr, int k) {
 }
 
 int main() {
-    vector<int> v = { 1, 2, 3 };
-    int ans = getkthlargest(v, 2);
+    vector<int> v = { 1, 2, 3, 5, 8, 4};
+    int ans = getkthlargest(v, 3);
     cout << ans << endl;
 }
