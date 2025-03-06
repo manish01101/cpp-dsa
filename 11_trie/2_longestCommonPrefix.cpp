@@ -1,5 +1,4 @@
 #include<iostream>
-// #include<string>
 #include<vector>
 using namespace std;
 /*
@@ -30,6 +29,76 @@ string longestCommonPrefix(vector<string>& arr, int n) {
             ans.push_back(ch);
     }
     return ans;
+}
+
+
+// REFACTORED CODE
+class TrieNode {
+public:
+    char data;
+    TrieNode* children[26];
+    int childCount;
+    bool isTerminal;
+
+    TrieNode(char ch) : data(ch), childCount(0), isTerminal(false) {
+        fill(begin(children), end(children), nullptr);
+    }
+};
+
+class Trie {
+private:
+    TrieNode* root;
+
+    void insertUtil(TrieNode* root, const string& word, int index) {
+        if (index == word.length()) {
+            root->isTerminal = true;
+            return;
+        }
+        int charIndex = word[index] - 'a';
+        if (!root->children[charIndex]) {
+            root->children[charIndex] = new TrieNode(word[index]);
+            root->childCount++;
+        }
+        insertUtil(root->children[charIndex], word, index + 1);
+    }
+
+public:
+    Trie() : root(new TrieNode('\0')) {}
+
+    void insertWord(const string& word) {
+        insertUtil(root, word, 0);
+    }
+
+    string longestCommonPrefix(const string& firstWord) {
+        string ans;
+        TrieNode* curr = root;
+        for (char ch : firstWord) {
+            int index = ch - 'a';
+            if (curr->childCount == 1 && !curr->isTerminal) {
+                ans.push_back(ch);
+                curr = curr->children[index];
+            } else {
+                break;
+            }
+        }
+        return ans;
+    }
+};
+
+string trieLongestCommonPrefix(vector<string>& words) {
+    if (words.empty()) return "";
+    
+    Trie trie;
+    for (const string& word : words) {
+        trie.insertWord(word);
+    }
+    return trie.longestCommonPrefix(words[0]);
+}
+
+int main() {
+    vector<string> words = { "manish", "man" };
+    cout << "Longest Common Prefix: " << trieLongestCommonPrefix(words) << endl;
+    return 0;
 }
 
 
