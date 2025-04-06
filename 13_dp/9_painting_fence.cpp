@@ -3,7 +3,8 @@ using namespace std;
 
 #define MOD 1000000007
 /*
-paint in such a way that two consecutive paint have atmost 2 same color
+n-> no.of post; k->no.of colors
+paint in such a way that not more than two adjacent post have the same color
 => f(n) = f(n-2) * (k-1) {for same color} + f(n-2) + (k-1) {for different color}
 */
 
@@ -72,4 +73,7 @@ int numberOfWays(int n, int k) {
 
 	/* ---- space optimisation ---- */
 	return solveSpaceOpt(n, k);
+}
+int main() {
+	cout << numberOfWays(3, 3) << endl;
 }

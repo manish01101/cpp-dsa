@@ -2,10 +2,10 @@
 using namespace std;
 #define MOD 1000000007
 /*
-(n-1) * sol of subproblem
+total way of placing an ele = (n-1) * sol of subproblem
 2 possibilities
-	-> i & 0 index ele swapped => (n-2) index & (n-2) num to be placed => f(n-2)
-	-> 0 idx val is placed in i'th index => (n-1)index & n-1 num to be placed => f(n-1)
+	-> both i & 0 index ele swapped => (n-2) index available & (n-2) num to be placed => f(n-2)
+	-> single ele i.e 0 idx val is placed in i'th index => (n-1)index available for i'th val & n-1 num to be placed => f(n-1)
 
 => f(n) = (n-1)*[f(n-2) + f(n-1)]
 */

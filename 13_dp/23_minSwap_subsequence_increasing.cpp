@@ -18,7 +18,7 @@ int solve(vector<int>& nums1, vector<int>& nums2, int index, bool isSwapped) {
 	int prev1 = nums1[index - 1];
 	int prev2 = nums2[index - 1];
 
-	// catched when ele is equal to its prev
+	// this is because we don't swap ele actually, so we swap here to find actual prev ele
 	if (isSwapped)
 		swap(prev1, prev2);
 
@@ -46,7 +46,7 @@ int solveMem(vector<int>& nums1, vector<int>& nums2, int index, bool isSwapped, 
 	int prev1 = nums1[index - 1];
 	int prev2 = nums2[index - 1];
 
-	// catched when ele is equal to its prev
+	// this is because we don't swap ele actually, so we swap here to find actual prev ele
 	if (isSwapped)
 		swap(prev1, prev2);
 
@@ -72,7 +72,7 @@ int solveTab(vector<int>& nums1, vector<int>& nums2) {
 			int prev1 = nums1[index - 1];
 			int prev2 = nums2[index - 1];
 
-			// catched when ele is equal to its prev
+			// this is because we don't swap ele actually, so we swap here to find actual prev ele
 			if (isSwapped)
 				swap(prev1, prev2);
 

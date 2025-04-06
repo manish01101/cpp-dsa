@@ -43,6 +43,7 @@ int solveTab(vector<int>& num, int x) {
 
 	for (int i = 1; i <= x; i++) {
 		for (int j = 0; j < num.size(); j++) {
+			// check i-num[j] is valid index also for dp[i-num[j]] lie under int range
 			if (i - num[j] >= 0 && dp[i - num[j]] != INT_MAX) {
 				dp[i] = min(dp[i], 1 + dp[i - num[j]]);
 			}

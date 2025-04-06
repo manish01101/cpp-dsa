@@ -6,8 +6,7 @@ int solve(int n) {
 		return 0;
 	int ans = n;
 	for (int i = 1; i * i <= n; i++) {
-		int temp = i * i;
-		ans = min(ans, 1 + solve(n - temp));
+		ans = min(ans, 1 + solve(n - i * i));
 	}
 	return ans;
 }
@@ -19,12 +18,10 @@ int solveMem(int n, vector<int>& dp) {
 		return dp[n];
 
 	int ans = n;
-	for (int i = 1; i * i <= n; i++) {
-		int temp = i * i;
-		ans = min(ans, i + solveMem(n - temp, dp));
+	for (int i = 1; i * i <= n; i++) {;
+		ans = min(ans, i + solveMem(n - i * i, dp));
 	}
-	dp[n] = ans;
-	return dp[n];
+	return dp[n] = ans;
 }
 int solveTab(int n) {
 	vector<int> dp(n + 1, INT_MAX);

@@ -42,10 +42,10 @@ int solve(int index, int operationNo, int k, vector<int>& prices) {
 		return 0;
 
 	int profit = 0;
-	if (operationNo % 2 == 0) { // buy allowed, 
+	if (operationNo % 2 == 0) { // buy allowed, buy is assciated with even no
 		profit = max((-prices[index] + solve(index + 1, operationNo + 1, k, prices)), (0 + solve(index + 1, operationNo, k, prices)));
 	}
-	else {
+	else { // sell is associated with odd no
 		profit = max((prices[index] + solve(index + 1, operationNo + 1, k, prices)), (0 + solve(index + 1, operationNo, k, prices)));
 	}
 	return profit;

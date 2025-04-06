@@ -46,14 +46,14 @@ int solveTab(int n, int a[]) {
 			// include
 			int take = 0;
 			if (prev == -1 || a[curr] > a[prev]) {
-				take = 1 + dp[curr + 1][curr + 1];
+				take = 1 + dp[curr + 1][curr + 1]; // first curr+1 -> dp row size (n+1), & second curr+1 instead of curr for handling -ve idx
 			}
 			// exclude
 			int notTake = 0 + dp[curr + 1][prev + 1];
 			dp[curr][prev + 1] = max(take, notTake);
 		}
 	}
-	return dp[0][0];
+	return dp[0][0]; //dp[0][-1+1] , +1 for handling -ve index
 }
 
 int solveSpaceOpt(int n, int a[]) {
@@ -117,13 +117,10 @@ int longestSubsequence(int n, int a[]) {
 
 // russian doll envelop
 static bool cmp(const vector<int>& a, const vector<int>& b) {
-	if (a[0] > b[0]) {
-		return true;
-	}
 	if (a[0] == b[0]) {
-		return a[1] < b[1];
+		return a[1] > b[1];  // sort height in descending order if width is the same
 	}
-	return false;
+	return a[0] < b[0];  // sort width in ascending order
 }
 
 

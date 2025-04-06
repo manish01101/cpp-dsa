@@ -37,7 +37,7 @@ int lengthOfLongestAP(int A[], int n) {
 		return n;
 
 	int ans = 0;
-	unordered_map<int, in> dp[n + 1];
+	unordered_map<int, int> dp[n + 1];
 
 	for (int i = 0; i < n; i++) {
 		for (int j = i + 1; j < n; j++) {
@@ -69,6 +69,29 @@ int lenghtOfLongestAPBottomUp(int A[], int n) {
 
 			dp[i][diff] = 1 + cnt;
 			ans = max(ans, dp[i][diff]);
+		}
+	}
+	return ans;
+}
+
+/* space opt */
+int lenghtOfLongestAPBottomUp(int A[], int n) {
+	if (n <= 2)
+		return n;
+
+	int ans = 1;
+	unordered_set<int>dp(A, A + n);
+
+	for (int i = 0; i < n; i++) {
+		for (int j = i + 1; j < n; j++) {
+			int len = 2;
+			int diff = A[j] - A[i];
+			int curr = 2 * A[j] - A[i];
+			while (dp.find(curr) != dp.end()) {
+				len++;
+				curr = curr + diff;
+			}
+			ans = max(ans, len);
 		}
 	}
 	return ans;

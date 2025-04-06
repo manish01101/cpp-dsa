@@ -34,16 +34,18 @@ int solveMem(vector<int>& nums, int n, vector<int>& dp) {
 	return dp[n];
 }
 int solveTab(vector<int>& nums, int n) {
-	vector<int> dp(n, 0);
-	// base case analyze
-	dp[0] = nums[0];
-
-	for (int i = 1; i < n; i++) {
-		int incl = dp[i - 2] + nums[i];
-		int excl = dp[i - 1] + 0;
-		dp[n] = max(incl, excl);
-	}
-	return dp[n - 1];
+    if (n == 0) return 0;  // Handle empty array case
+    if (n == 1) return nums[0];  // Handle single element case
+    
+    vector<int> dp(n, 0);
+    dp[0] = nums[0];  // Base case
+    
+    for (int i = 1; i < n; i++) {
+        int incl = nums[i] + (i > 1 ? dp[i - 2] : 0);  // Prevent out-of-bounds
+        int excl = 0 + dp[i - 1];  // Skipping the current element
+        dp[i] = max(incl, excl);
+    }
+    return dp[n - 1];
 }
 int solveSpaceOpt(vector<int>& nums, int n) {
 	int prev2 = 0;

@@ -14,8 +14,8 @@ int solve(vector<int>& weight, vector<int>& value, int index, int capacity) {
 	// base case
 	// if only 1 item to steal, then just compare its weight with the knapsack capacity
 	if (index == 0) {
-		if (weight[0] <= capacity)
-			return value[0];
+		if (weight[index] <= capacity)
+			return value[index];
 		else
 			return 0;
 	}
@@ -32,6 +32,13 @@ int solve(vector<int>& weight, vector<int>& value, int index, int capacity) {
 	int ans = max(include, exclude);
 	return ans;
 }
+
+int ks(int wt[], int profit[], int w, int n) {
+	if (w == 0 or n == 0) return 0; // base
+	if (wt[n] > w) return ks(wt, profit, w, n - 1); //skip
+	else return max(ks(wt, profit, w, n - 1), profit[n] + ks(wt, profit, w - wt[n], n - 1));
+}
+
 
 /* RECURSION + MEMOIZATION */
 int solveMem(vector<int>& weight, vector<int>& value, int index, int capacity, vector<vector<int>>& dp) {
@@ -61,25 +68,29 @@ int solveMem(vector<int>& weight, vector<int>& value, int index, int capacity, v
 
 /* TABULAITON */
 int solveTab(vector<int>& weight, vector<int>& value, int n, int capacity) {
-	// step 1: create dp arr
+	// Step 1: Create DP table
 	vector<vector<int>> dp(n, vector<int>(capacity + 1, 0));
 
-	// step 2: analyze vase case
-	for (int w = weight[0]; w <= capacity; w++) {
-		if (weight[0] <= capacity)
+	// Step 2: Base Case
+	// for (int w = weight[0]; w <= capacity; w++) {
+	// 	if (weight[0] <= capacity)
+	// 		dp[0][w] = value[0];
+	// 	else
+	// 		dp[0][w] = 0;
+	// }
+	for (int w = 0; w <= capacity; w++) {
+		if (weight[0] <= w)
 			dp[0][w] = value[0];
-		else
-			dp[0][w] = 0;
 	}
 
-	// process
+	// Step 3: Process remaining items
 	for (int index = 1; index < n; index++) {
 		for (int wt = 0; wt <= capacity; wt++) {
 			int include = 0;
 			if (weight[index] <= wt)
 				include = value[index] + dp[index - 1][wt - weight[index]];
 
-			int exclude = 0 + dp[index - 1][wt];
+			int exclude = dp[index - 1][wt];
 
 			dp[index][wt] = max(include, exclude);
 		}
@@ -100,7 +111,7 @@ int solveSpaceOpt(vector<int>& weight, vector<int>& value, int n, int capacity) 
 		else
 			prev[w] = 0;
 	}
-	// process
+	// Step 3: Process remaining items
 	for (int index = 1; index < n; index++) {
 		for (int wt = 0; wt <= capacity; wt++) {
 			int include = 0;
@@ -128,7 +139,7 @@ int solveSpaceOpt2(vector<int>& weight, vector<int>& value, int n, int capacity)
 		else
 			curr[w] = 0;
 	}
-	// process
+	// Step 3: Process remaining items
 	for (int index = 1; index < n; index++) {
 		for (int wt = capacity; wt >= 0; wt--) {
 			int include = 0;
@@ -143,6 +154,20 @@ int solveSpaceOpt2(vector<int>& weight, vector<int>& value, int n, int capacity)
 	return curr[capacity];
 }
 
+// Space Optimization (O(capacity))
+int knapsackOptimized(vector<int>& weight, vector<int>& value, int n, int capacity) {
+	vector<int> dp(capacity + 1, 0);
+
+	for (int i = 0; i < n; i++) {
+		for (int w = capacity; w >= weight[i]; w--) {
+			dp[w] = max(dp[w], value[i] + dp[w - weight[i]]);
+		}
+	}
+
+	return dp[capacity];
+}
+
+
 int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) {
 	/* --- recursion --- */
 	// return solve(weight, value, n - 1, maxWeight);
@@ -152,8 +177,8 @@ int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) {
 	// return solveMem(weight, value, n - 1, maxWeight, dp);
 
 	/* --- tabulation ---- */
-	// return solveTab(weight, value, n - 1, maxWeight);
+	// return solveTab(weight, value, n, maxWeight);
 
 	/* --- space optimisation --- */
-	return solveSpaceOpt(weight, value, n - 1, maxWeight);
+	return solveSpaceOpt(weight, value, n, maxWeight);
 }

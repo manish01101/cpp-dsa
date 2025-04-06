@@ -1,113 +1,90 @@
-#include<bits/stdc++.h>
-using namespace std;
+class Solution {
+    int solveRec(int index, vector<int> &days, vector<int> &costs) {
+        if(index >= days.size())
+            return 0;
+        int costDay = costs[0] + solveRec(index+1, days, costs);
 
-int solve(int n, vector<int>& days, vector<int>& cost, int index) {
-	// base case
-	if (index >= n)
-		return 0;
+        int i = index;
+        while(i < days.size() and days[i] < days[index]+7) i++;
+        int costWeek = costs[1] + solveRec(i, days, costs);
 
-	// 1-day pass
-	int option1 = cost[0] + solve(n, days, cost, index + 1);
+        i = index;
+        while(i < days.size() and days[i] < days[index]+30) i++;
+        int costMonth = costs[2] + solveRec(i, days, costs);
 
-	// 7-day pass
-	int i;
-	for (i = index; i < n && days[i] < days[index] + 7; i++);
-	int option2 = cost[1] + solve(n, days, cost, i);
+        return min({costDay, costWeek, costMonth});
+    }
+    int solveMem(int index, vector<int> &days, vector<int> &costs, vector<int> &dp) {
+        if(index >= days.size())
+            return 0;
+        if(dp[index] != -1)
+            return dp[index];
+        int costDay = costs[0] + solveMem(index+1, days, costs, dp);
 
-	// 30-dyas pass
-	for (i = index; i < n && days[i] < days[index] + 30; i++);
-	int option3 = cost[2] + solve(n, days, cost, i);
+        int i=index;
+        while(i < days.size() and days[i] < days[index]+7) i++;
+        int costWeek = costs[1] + solveMem(i, days, costs, dp);
 
-	return min({ option1, option2, option3 });
-}
+        i=index;
+        while(i < days.size() and days[i] < days[index]+30) i++;
+        int costMonth = costs[2] + solveMem(i, days, costs, dp);
 
+        return dp[index] = min({costDay, costWeek, costMonth});
+    }
+    int solveTab(vector<int> &days, vector<int> &costs) {
+        int n = days.size();
+        vector<int> dp(n+1, INT_MAX);
+        dp[n] = 0;
 
-int solveMem(int n, vector<int>& days, vector<int>& cost, int index, vector<int>& dp) {
-	// base case
-	if (index >= n)
-		return 0;
+        for(int i=n-1; i >= 0; i--) {
+            int costDay = costs[0] + dp[i+1];
 
-	if (dp[index] != -1)
-		return dp[index];
+            int j=i;
+            while(j < n and days[j] < days[i]+7) j++;
+            int costWeek = costs[1] + dp[j];
 
-	// 1-day pass
-	int option1 = cost[0] + solve(n, days, cost, index + 1);
+            j=i;
+            while(j < n and days[j] < days[i]+30) j++;
+            int costMonth = costs[2] + dp[j];
 
-	// 7-day pass
-	int i;
-	for (i = index; i < n && days[i] < days[index] + 7; i++);
-	int option2 = cost[1] + solve(n, days, cost, i);
+            dp[i] = min({costDay, costWeek, costMonth});
+        }
+        return dp[0];
+    }
+    int solveSpcOpt(vector<int> &days, vector<int>& costs) {
+        int ans = 0;
+        queue<pair<int, int>> week, month; // {day, cost} // constant space(max -> 7 for week, 30 for month)
 
-	// 30-dyas pass
-	for (i = index; i < n && days[i] < days[index] + 30; i++);
-	int option3 = cost[2] + solve(n, days, cost, i);
+        for(int day: days) {
+            // remove expired day
+            while(!week.empty() and week.front().first+7 <= day)
+                week.pop();
+            while(!month.empty() and month.front().first+30 <= day)
+                month.pop();
 
-	dp[index] = min({ option1, option2, option3 });
-	return dp[index];
-}
+            // enter curr day with cost
+            week.push({day, ans+costs[1]});
+            month.push({day, ans+costs[2]});
 
+            // update ans
+            ans = min({ans+costs[0], week.front().second, month.front().second});
+        }
+        return ans;
+    }
 
-int solveTab(int n, vector<int>& days, vector<int>& cost) {
-	vector<int> dp(n + 1, INT_MAX);
-	dp[n] = 0;
+public:
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        // recursion
+        // return solveRec(0, days, costs);
+        
+        // recursion + memoization => top-down dp
+        // vector<int> dp(days.size()+1, -1);
+        // return solveMem(0, days, costs, dp);
 
-	for (int k = n - 1; k >= 0; k--) {
-		// 1-day pass
-		int option1 = cost[0] + dp[k + 1];
+        // tabulation => bottom-up dp
+        // return solveTab(days, costs);
 
-		// 7-day pass
-		int i;
-		for (i = k; i < n && days[i] < days[k] + 7; i++);
-		int option2 = cost[1] + dp[i];
-
-		// 30-dyas pass
-		for (i = k; i < n && days[i] < days[k] + 30; i++);
-		int option3 = cost[2] + dp[i];
-
-		dp[k] = min({ option1, option2, option3 });
-	}
-	return dp[0];
-}
-
-/*
-queue<pair<day, cost>> monthly; => only 30 entries
-queue<pair<day, cost>> weekly; => only 7 entries
-*/
-int solveSpaceOpt(int n, vector<int>& days, vector<int>& cost) {
-	int ans = 0;
-
-	queue<pair<int, int>> month;
-	queue<pair<int, int>> week;
-
-	for (int day : days) {
-		// step 1: removed expired days
-		while (!month.empty() && month.front.first + 30 <= day) {
-			month.pop();
-		}
-		while (!week.empty() && week.front.first + 7 <= day) {
-			week.pop();
-		}
-
-		// step 2: add cost for current day
-		week.push({ day, ans + cost[1] });
-		month.push({ day, ans + cost[2] });
-
-		// step 3: ans update
-		ans = min(ans + cost[0], min(week.front().second, month.front().second));
-	}
-	return ans;
-}
-int minCostTicket(int n, vector<int>& days, vector<int>& cost) {
-	/* --- recursion --- */
-	// return solve(n, days, cost, 0);
-
-	/* -- rec + mem -- */
-	// vector<int> dp(n + 1, -1);
-	// return solveMem(n, days, cost, 0, dp);
-
-	/* -- tabulation -- */
-	// return solveTab(n, days, cost);
-
-	/* --- space opt --- */
-	return solveSpaceOpt(n, days, cost);
-}
+        // space optimization
+        return solveSpcOpt(days, costs);
+    }
+};
