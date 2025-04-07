@@ -11,26 +11,26 @@ struct Item {
 	int weight;
 };
 double fractionalKnapsack(int W, Item arr[], int n) {
-	vector<pair<double, Item>> v;
+	vector<pair<double, Item>> unitValue;
 	for (int i = 0; i < n; i++) {
 		double perUnitValue = (1.0 * arr[i].value) / arr[i].weight;
-		v.push_back({ perUnitValue, arr[i] });
+		unitValue.push_back({ perUnitValue, arr[i] });
 	}
 
-	sort(v.begin(), v.end(), [](pair<double, Item>& a, pair<double, Item>& b) {
+	sort(unitValue.begin(), unitValue.end(), [](pair<double, Item>& a, pair<double, Item>& b) {
 		return a.first > b.first;
 		});
 
 	double totalValue = 0;
 	for (int i = 0; i < n; i++) {
-		if (v[i].second.weight > W) {
+		if (unitValue[i].second.weight > W) { // item weight is more than capacity
 			// take fraction of item
-			totalValue += W * v[i].first;
+			totalValue += W * unitValue[i].first;
 			W = 0;
 		}
-		else {
-			totalValue += v[i].second.value;
-			W -= v[i].second.weight;
+		else { // item wt is <= capacity
+			totalValue += unitValue[i].second.value;
+			W -= unitValue[i].second.weight;
 		}
 	}
 	return totalValue;

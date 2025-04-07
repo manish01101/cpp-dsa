@@ -21,10 +21,9 @@ vector<int> JobScheduling(Job arr[], int n) {
 	// create schedule arr
 	int maxiDeadline = INT_MIN;
 	for (int i = 0; i < n; i++) {
-		if (arr[i].deadline > maxiDeadline)
-			maxiDeadline = arr[i].deadline;
+		maxiDeadline = max(maxiDeadline, arr[i].deadline);
 	}
-	vector<int> schedule(maxiDeadline + 1, -1);
+	vector<int> schedule(maxiDeadline + 1, -1); // maxiDeadline+1 for 1-based indexing
 
 	// process
 	int count = 0;
@@ -34,7 +33,7 @@ vector<int> JobScheduling(Job arr[], int n) {
 		int currJobID = arr[i].id;
 		int currDeadline = arr[i].deadline;
 		// trying to do at deadline
-		for (int k = currDeadline; k > 0; k--) {
+		for (int k = currDeadline; k > 0; k--) { // k > 0 for 1-based indexing
 			if (schedule[k] == -1) {
 				schedule[k] = currJobID;
 				maxProfit += currProfit;
