@@ -80,7 +80,7 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
     vector<int> weight(n + 1, INT_MAX); // n+1 for 1 based indexing
     vector<bool> isNodeInMstVisited(n + 1, false);
     vector<int> parent(n + 1, -1);
-    // pair<weigth, node>
+    // pair<weight, node>
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > pq;
 
     // starting the algo 
@@ -119,3 +119,10 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
     }
     return result;
 }
+
+
+strength
+stability
+discipline
+
+creativity flexibility compassion

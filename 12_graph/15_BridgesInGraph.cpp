@@ -11,7 +11,7 @@ using namespace std;
 bridge -> that edge, which increases the no. of components after removing it.
 */
 
-void dfs(int node, int parent, int& timer, vector<int>& discoveryTime, vector<int>& earliestTime, vector<vector<int>>& result, unordered_map<int, list<int>> adj, unordered_map<int, bool>& isVisited) {
+void dfs(int node, int parent, int& timer, vector<int>& discoveryTime, vector<int>& earliestTime, vector<vector<int>>& result, unordered_map<int, list<int>> &adj, unordered_map<int, bool>& isVisited) {
 
     isVisited[node] = true;
     discoveryTime[node] = earliestTime[node] = timer++;

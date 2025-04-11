@@ -17,10 +17,6 @@ if rank of parent of first node < rank of parent of second node
 path compression -> if path of any node is larger then just add to top node to that its length gets decreased
 */
 
-// comparator
-bool cmp(vector<int>& a, vector<int>& b) {
-    return a[2] < b[2];
-}
 void makeSet(vector<int>& parent, vector<int>& rank, int n) {
     for (int i = 0; i < n; i++) {
         parent[i] = i;
@@ -67,7 +63,9 @@ SC: O(n)
 // main fn
 int minimumSpanningTree(vector<vector<int>>& edges, int n) {
 
-    sort(edges.begin(), edges.end(), cmp); // sort by weight@index-2
+    sort(edges.begin(), edges.end(), [](vector<int>& a, vector<int>& b) {
+        return a[2] < b[2];
+    }); // sort by weight@index-2
 
     vector<int> parent(n);
     vector<int> rank(n);

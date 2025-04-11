@@ -11,8 +11,7 @@ class Graph {
 public:
     unordered_map<int, list<pair<int, int>>> adjList;
     void addEdge(int u, int v, int weight) {
-        pair<int, int> p = make_pair(v, weight);
-        adjList[u].push_back(p);
+        adjList[u].push_back({v, weight});
     }
     void printAdjList() {
         for (auto i : adjList) {

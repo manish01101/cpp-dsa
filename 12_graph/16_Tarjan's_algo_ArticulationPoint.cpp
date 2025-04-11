@@ -21,13 +21,14 @@ void dfs(int node, int parent, vector<int>& discoveryTime, vector<int>& earliest
     isVisited[node] = true;
     discoveryTime[node] = earliestTime[node] = timer++;
     int child = 0;
+    
     for (auto neighbour : adj[node]) {
         if (neighbour == parent) {
             continue;
         }
         if (!isVisited[neighbour]) {
             dfs(neighbour, node, discoveryTime, earliestTime, isVisited, adj, ap, timer);
-
+            // update earliest time
             earliestTime[node] = min(earliestTime[node], earliestTime[neighbour]);
             // check AP or not
             if (earliestTime[neighbour] >= discoveryTime[node] && parent != -1) {
@@ -39,7 +40,7 @@ void dfs(int node, int parent, vector<int>& discoveryTime, vector<int>& earliest
             earliestTime[node] = min(earliestTime[node], discoveryTime[neighbour]);
         }
     }
-    if (parent == -1 && child > 1) {
+    if (parent == -1 && child > 1) { // handle root node
         ap[node] = true;
     }
 }

@@ -9,7 +9,7 @@
 using namespace std;
 
 /*
-bellman ford algo work on -ve weight
+bellman ford algo work on -ve weight, dijkstra algo not work on -ve weight
 this algo dont work on -ve cycle => using this we can find -ve cycle is present or not
 
 TC: O(nodes * edges)

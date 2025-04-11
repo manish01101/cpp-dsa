@@ -19,7 +19,7 @@ vector<int> shortestPath(vector<pair<int, int>>& edges, int n, int m, int s, int
         adjList[v].push_back(u);
     }
 
-    // do dfs
+    // bfs
     unordered_map<int, bool> isVisited;
     unordered_map<int, int> parent;
     queue<int> q;
@@ -41,10 +41,18 @@ vector<int> shortestPath(vector<pair<int, int>>& edges, int n, int m, int s, int
     // finding shortest path
     vector<int> ans;
     int currNode = t;
+    ans.push_back(currNode);
     while (currNode != s) {
         currNode = parent[currNode];
         ans.push_back(currNode);
     }
     reverse(ans.begin(), ans.end());
     return ans;
+}
+
+int main() {
+    vector<pair<int, int>> edges = {{1, 2}, {1, 3}, {2, 4}, {3, 4}, {4, 5}};
+    vector<int> ans = shortestPath(edges, 5, 5, 1, 5);
+    for(int i: ans)cout << i << "->";
+    cout << endl;
 }
