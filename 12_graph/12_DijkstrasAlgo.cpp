@@ -58,28 +58,28 @@ vector<int> Dijkstra(vector<vector<int>>& vec, int vertices, int edges, int sour
 }
 
 /* USING MIN HEAP => Time Complexity: O((V+E)logV) Space Complexity: O(V+E)*/
-vector<int> dijkstra(int V, vector<vector<int>> adj[], int S) {
+vector<int> dijkstra(int V, vector<vector<pair<int, int>>> &adj, int S) {
     vector<int> dist(V, INT_MAX);
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
 
     // Initializing source
     dist[S] = 0;
-    pq.push({0, S});
+    minHeap.push({0, S});
 
-    while (!pq.empty()) {
-        auto [tempWeight, tempNode] = pq.top(); // Structured binding
-        pq.pop();
+    while (!minHeap.empty()) {
+        auto [tempWeight, tempNode] = minHeap.top(); // Structured binding
+        minHeap.pop();
 
         // Optimization: Skip outdated distances
         if (dist[tempNode] < tempWeight) continue;
 
         for (auto& neighbour : adj[tempNode]) {
-            int neighbourNode = neighbour[0];
-            int neighbourWeight = neighbour[1];
+            int neighbourNode = neighbour.first;
+            int neighbourWeight = neighbour.second;
 
             if (tempWeight + neighbourWeight < dist[neighbourNode]) {
                 dist[neighbourNode] = tempWeight + neighbourWeight;
-                pq.push({dist[neighbourNode], neighbourNode});
+                minHeap.push({dist[neighbourNode], neighbourNode});
             }
         }
     }
