@@ -2,13 +2,13 @@
 using namespace std;
 
 class Distance {
-    private:
+private:
     int feet;
     float inches;
 
-    public:
-    Distance() : feet(0), inches(0.0) {}
-    Distance(int ft, float in) : feet(ft), inches(in) {}
+public:
+    Distance() : feet(0), inches(0.0) { }
+    Distance(int ft, float in) : feet(ft), inches(in) { }
     void set_dist() {
         cout << "\nenter feet: "; cin >> feet;
         cout << "\nenter inches: "; cin >> inches;
@@ -16,10 +16,10 @@ class Distance {
     void get_dist() {
         cout << "feet: " << feet << ", inches: " << inches << "\n";
     }
-    Distance operator + (Distance) const; // add 2 distances
+    Distance operator+(Distance) const; // add 2 distances
 };
 
-Distance Distance::operator + (Distance d2) const {
+Distance Distance::operator+(Distance d2) const {
     int f = feet + d2.feet;
     float i = inches + d2.inches;
     if (i >= 12.0) {

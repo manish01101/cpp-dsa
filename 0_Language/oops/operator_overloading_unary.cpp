@@ -11,10 +11,10 @@ class Counter {
 
     unsigned int get_count() { return count; }
     // UNARY OPERATOR
-    Counter operator ++ () { // prefix operator overloading
+    Counter operator++() { // prefix operator overloading
         return Counter(++count); // return unnamed temp obj
     }
-    Counter operator ++ (int) { // here int represent, it should be postfix operator overloading
+    Counter operator++(int) { // here int represent, it should be postfix operator overloading
         return Counter(count++); // return unnamed temp obj
     }
 };
@@ -32,7 +32,7 @@ int main() {
 
 /*
 NOTE: dot operator(member access), scope resolution operator, conditional operator,
-pointer to member operator(->) = these operator can not be overloaded
+pointer to member operator(->) all these operator can not be overloaded
 
 only existing operator can be overloaded except the adove.
 */

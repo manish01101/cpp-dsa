@@ -3,9 +3,9 @@
 /*
 Namespaces in cpp provide a way to organize code into logical groups and prevent naming conflicts. They allow you to define named scopes, called namespcaes, where identifiers (such as variables, functions, and classes) can be declared.
 
-Namespaces help in avoiding naming collisions by ensuring that the names of identifiers within a namespaces do not confilict with names in other namespcaces or the global scopes.
+Namespaces help in avoiding naming collisions by ensuring that the names of identifiers within a namespaces do not conflict with names in other namespcaces or the global scopes.
 
-access members of namespaces using "::"
+access members of namespaces using "::" -> scope resolution operator
 */
 
 
@@ -15,4 +15,7 @@ namespace MyNamespaces {
     void display() {
         std::cout << "inside MyNamespaces" << std::endl;
     }
+}
+int main() {
+    MyNamespaces::display();
 }

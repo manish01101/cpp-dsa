@@ -13,7 +13,7 @@ The throw statement is used to throw an exception manually. It can be used withi
 #include <stdexcept>  // Required for standard exceptions
 
 Exceptions are Runtime errors
-Try and catch blacks are used for handling exceptions
+Try and catch blocks are used for handling exceptions
 If exceptions are not handled then program may crash
 Exceptions must give a message to the user, giving correct reason on cause of exception
 A try block can have Multiple catch blocks
@@ -66,7 +66,7 @@ You can define custom exception classes by deriving from the std::exception clas
 #include <stdexcept>
 // Custom exception class for negative numbers
 class NegativeNumberException : public std::exception {
-    public:
+public:
     const char* what() const noexcept override {
         return "Negative number encountered";
     }

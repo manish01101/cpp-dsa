@@ -4,7 +4,7 @@ Pointers to members allow storing the addresses of class members (variables or f
 
 #include <iostream>
 class MyClass {
-    public:
+public:
     int data = 10;
     void display() {
         std::cout << "Data: " << data << std::endl;
@@ -12,7 +12,7 @@ class MyClass {
 };
 int main() {
     int MyClass::* ptr = &MyClass::data; // Pointer to data member
-    void (MyClass::* funcPtr)() = &MyClass::display; //Pointer to member function
+    void (MyClass:: * funcPtr)() = &MyClass::display; //Pointer to member function
 
     MyClass obj;
     std::cout << obj.*ptr << std::endl; // Access data member using pointer
