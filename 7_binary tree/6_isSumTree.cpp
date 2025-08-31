@@ -10,7 +10,7 @@ pair<bool, int> isSumTreeFast(node* root) {
     }
     //handling for leaf node
     if (root->left == NULL && root->right == NULL) {
-        pair<bool, int> p = make_pair(true, 0); //<t/f, sum>
+        pair<bool, int> p = make_pair(true, root->data); //<t/f, sum>
         return p;
     }
     pair<bool, int> leftAns = isSumTreeFast(root->left);

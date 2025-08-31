@@ -111,22 +111,22 @@ bool solveMemOne(string& str, string& pattern, int i, int j, vector<vector<int>>
 }
 
 bool solveTab(string str, string pattern) {
-	vector<vector<int>> dp(str.length() + 1, vector<int>(pattern.length() + 1, 0));
+	vector<vector<bool>> dp(str.length() + 1, vector<bool>(pattern.length() + 1, false));
 	// base case analyze
 	dp[0][0] = true;
-	for (int j = 1; j <= pattern.length(); j++) {
-		bool flag = true;
-		for (int k = 1; k <= j; k++) {
+	for (size_t j = 1; j <= pattern.length(); j++) {
+		bool allStars = true;
+		for (size_t k = 1; k <= j; k++) {
 			if (pattern[k - 1] != '*') {
-				flag = false;
+				allStars = false;
 				break;
 			}
 		}
-		dp[0][j] = flag;
+		dp[0][j] = allStars;
 	}
 
-	for (int i = 1; i <= str.length(); i++) {
-		for (int j = 1; j <= pattern.length(); j++) {
+	for (size_t i = 1; i <= str.length(); i++) {
+		for (size_t j = 1; j <= pattern.length(); j++) {
 			// matched
 			if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '?') {
 				dp[i][j] = dp[i - 1][j - 1];
@@ -143,26 +143,24 @@ bool solveTab(string str, string pattern) {
 }
 
 
-
 bool solveSpaceOpt(string str, string pattern) {
 	vector<int> prev(pattern.length() + 1, 0);
 	vector<int> curr(pattern.length() + 1, 0);
 	// base case analyze
 	prev[0] = true;
 	for (int j = 1; j <= pattern.length(); j++) {
-		bool flag = true;
+		bool allStars = true;
 		for (int k = 1; k <= j; k++) {
 			if (pattern[k - 1] != '*') {
-				flag = false;
+				allStars = false;
 				break;
 			}
 		}
-		prev[j] = flag;
+		prev[j] = allStars;
 	}
 
 	for (int i = 1; i <= str.length(); i++) {
 		for (int j = 1; j <= pattern.length(); j++) {
-			// matched
 			if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '?') {
 				curr[j] = prev[j - 1];
 			}

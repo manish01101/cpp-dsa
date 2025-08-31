@@ -19,7 +19,7 @@ public:
     //push_front
     bool pushFront(int x) {
         //to check whether queue is full
-        if ((front == 0 && rear == size - 1) || (rear == (front - 1) % (size - 1))) {
+        if ((front == 0 && rear == size - 1) || (rear + 1) % size == front) {
             cout << "Queue is full";
             return false;
         }
@@ -37,7 +37,7 @@ public:
     }
     bool pushRear(int x) {
         //to check whether queue is full
-        if ((front == 0 && rear == size - 1) || (rear == (front - 1) % (size - 1))) {
+        if ((front == 0 && rear == size - 1) || (rear + 1) % size == front) {
             cout << "Queue is full";
             return false;
         }
@@ -88,7 +88,7 @@ public:
             return false;
     }
     bool isFull() {
-        if ((front == 0 && rear == size - 1) || (front != 0 && rear == (front - 1) % (size - 1)))
+        if ((front == 0 && rear == size - 1) || (rear + 1) % size == front))
             return true;
         else
             return false;

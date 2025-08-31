@@ -32,7 +32,7 @@ int solve(int index, bool canBuy, int limit, vector<int>& prices) {
 		profit = max((-prices[index] + solve(index + 1, false, limit, prices)), (0 + solve(index + 1, true, limit, prices)));
 	}
 	else {
-		profit = max((prices[index] + solve(index + 1, true, limit--, prices)), (0 + solve(index + 1, false, limit, prices)));
+		profit = max((prices[index] + solve(index + 1, true, limit - 1, prices)), (0 + solve(index + 1, false, limit, prices)));
 	}
 	return profit;
 }

@@ -29,17 +29,20 @@ step 2: remove last node
 step 3: propagate current root node at its current pos
 */
 
-class Heap {
+class MaxHeap { // tc: nlogn
 public:
     int arr[100];
-    int size = 0;
-    Heap() {
+    int size;
+    MaxHeap() {
         arr[0] = -1;
+        size = 0;
     }
     void insert(int val) {
         size++;
         int index = size;
         arr[index] = val; // tc: O(1)
+
+        // Heapify up
         while (index > 1) { // tc: o(logn)
             int parentIndex = index / 2;
             if (arr[parentIndex] < arr[index]) {
@@ -47,7 +50,7 @@ public:
                 index = parentIndex;
             }
             else {
-                return;
+                break;
             }
         }
     }
@@ -56,19 +59,21 @@ public:
             cout << "Nothing to delete" << endl;
             return;
         }
-        arr[1] = arr[size]; // first = last, tc: O(1)
+
+        // Replace root with last element
+        arr[1] = arr[size];
         size--; // decrease size(i.e. remove last)
 
-        // take root node to its correct position tc: O(log n)
+        // Heapify down take root node to its correct position tc: O(log n)
         int i = 1;
-        while (i < size) {
+        while (i <= size) {
             int leftIndex = 2 * i;
             int rightIndex = 2 * i + 1;
-            if (leftIndex < size && arr[i] < arr[leftIndex]) {
+            if (leftIndex <= size && arr[leftIndex] >= arr[i]) {
                 swap(arr[i], arr[leftIndex]);
                 i = leftIndex;
             }
-            else if (rightIndex < size && arr[i] < arr[rightIndex]) {
+            if (rightIndex <= size && arr[rightIndex] >= arr[i]) {
                 swap(arr[i], arr[rightIndex]);
                 i = rightIndex;
             }
@@ -80,7 +85,7 @@ public:
     void print() {
         for (int i = 1; i <= size; i++) {
             cout << arr[i] << " ";
-        }cout << endl;
+        } cout << endl;
     }
 };
 /*
@@ -88,16 +93,16 @@ leaf node is from (n/2 + 1) to n
 so for non leaf node i.e from (n/2) to 1 index we have to work on
 
 */
-// maxheap
-void heapify(int arr[], int n, int i) {  // tc logn
+// maxheap, tc logn
+void heapify(int arr[], int n, int i) {
     int largerstEleIndex = i;
     int leftChildIndex = 2 * i;
     int rightChildIndex = 2 * i + 1;
 
-    if (leftChildIndex < n && arr[largerstEleIndex] < arr[leftChildIndex]) {
+    if (leftChildIndex <= n && arr[largerstEleIndex] < arr[leftChildIndex]) {
         largerstEleIndex = leftChildIndex;
     }
-    if (rightChildIndex < n && arr[largerstEleIndex] < arr[rightChildIndex]) {
+    if (rightChildIndex <= n && arr[largerstEleIndex] < arr[rightChildIndex]) {
         largerstEleIndex = rightChildIndex;
     }
 
@@ -107,14 +112,22 @@ void heapify(int arr[], int n, int i) {  // tc logn
         heapify(arr, n, largerstEleIndex);
     }
 }
+
+void buildHeap(int arr[], int n) {
+    for (int i = n / 2; i > 0; i--) {
+        heapify(arr, n, i);
+    }
+}
 void print(int arr[], int n) {
     cout << "printing the array now" << endl;
     for (int i = 1; i <= n; i++) {
         cout << arr[i] << " ";
-    }cout << endl;
+    } cout << endl;
 }
+
 int main() {
-    Heap h;
+    // naive approach tc: nlogn for n ele
+    MaxHeap h;
     h.insert(40);
     h.insert(434);
     h.insert(34);
@@ -122,103 +135,11 @@ int main() {
     h.insert(3434);
     h.print();
 
+    // heapify approach tc: logn 
     int arr[6] = { -1, 54, 53, 55, 52, 50 };
     int n = 5;
-    for (int i = n / 2; i > 0; i--)
-        heapify(arr, n, i);
-
-    print(arr, n);
-
-    return 0;
-}
-
-
-
-// Naïve Approach (O(n log n))
-#include <iostream>
-using namespace std;
-
-void heapifyUp(int arr[], int index) {
-    while (index > 1) {
-        int parent = index / 2;
-        if (arr[parent] < arr[index]) {
-            swap(arr[parent], arr[index]);
-            index = parent;
-        } else {
-            break;
-        }
-    }
-}
-
-void insert(int arr[], int &n, int value) {
-    arr[++n] = value;  // Insert at next available position
-    heapifyUp(arr, n); // Restore heap property
-}
-
-void printHeap(int arr[], int n) {
-    for (int i = 1; i <= n; i++) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-}
-
-int main() {
-    int arr[100] = {-1}; // Heap (1-based index)
-    int n = 0;
-
-    int elements[] = {4, 10, 3, 5, 1};
-    for (int value : elements) {
-        insert(arr, n, value);
-    }
-
-    cout << "Heap (O(n log n) build time): ";
-    printHeap(arr, n);
-
-    return 0;
-}
-
-
-//Bottom-Up Heap Construction (O(n))
-#include <iostream>
-using namespace std;
-
-void heapifyDown(int arr[], int n, int i) {
-    int largest = i;
-    int left = 2 * i;
-    int right = 2 * i + 1;
-
-    if (left <= n && arr[left] > arr[largest])
-        largest = left;
-    if (right <= n && arr[right] > arr[largest])
-        largest = right;
-
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-        heapifyDown(arr, n, largest); // Recursively heapify affected subtree
-    }
-}
-
-void buildHeap(int arr[], int n) {
-    for (int i = n / 2; i > 0; i--) {
-        heapifyDown(arr, n, i);
-    }
-}
-
-void printHeap(int arr[], int n) {
-    for (int i = 1; i <= n; i++) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-}
-
-int main() {
-    int arr[] = {-1, 4, 10, 3, 5, 1};  // 1-based index heap
-    int n = 5;
-
     buildHeap(arr, n);
-
-    cout << "Heap (O(n) build time): ";
-    printHeap(arr, n);
+    print(arr, n);
 
     return 0;
 }

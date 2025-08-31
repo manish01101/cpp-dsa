@@ -10,20 +10,20 @@ int solveSpaceOpt(vector<int>& prices, int k) {
 
 	for (int index = n - 1; index >= 0; index--) {
 		for (int canBuy = 0; canBuy <= 1; canBuy++) {
-			for (int limit = 1; limit <= 2; limit++) {
+			for (int limit = 1; limit <= k; limit++) {
 				int profit = 0;
 				if (canBuy) {
-					profit = max((-prices[index] + next[false][limit]), (0 + next[true][limit]));
+					profit = max((-prices[index] + next[0][limit]), (0 + next[1][limit]));
 				}
 				else {
-					profit = max((prices[index] + next[true][limit - 1]), (0 + next[false][limit]));
+					profit = max((prices[index] + next[1][limit - 1]), (0 + next[0][limit]));
 				}
 				curr[canBuy][limit] = profit;
 			}
 		}
 		next = curr;
 	}
-	return next[true][2];
+	return next[true][k];
 }
 
 int maxProfit(vector<int>& prices, int k) {

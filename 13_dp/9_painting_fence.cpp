@@ -5,7 +5,7 @@ using namespace std;
 /*
 n-> no.of post; k->no.of colors
 paint in such a way that not more than two adjacent post have the same color
-=> f(n) = f(n-2) * (k-1) {for same color} + f(n-2) + (k-1) {for different color}
+=> f(n) = f(n-2) * (k-1) {for same color} + f(n-1) * (k-1) {for different color}
 */
 
 int add(int a, int b) {

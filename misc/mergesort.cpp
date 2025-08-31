@@ -3,12 +3,11 @@ using namespace std;
 // dividing list into sublist till it have one element
 // merging that sublist to get sorted list
 // backbone of merge sort is merge fn
-void merge(int *arr, int s, int e)
-{ // using indexes
+void merge(int* arr, int s, int e) { // using indexes
     int mid = s + (e - s) / 2;
     int left = s;
     int right = mid + 1;
-    int *arr2 = new int[e - s + 1];
+    int* arr2 = new int[e - s + 1];
     int k = s;
     while (left <= mid && right <= e)
     {
@@ -26,10 +25,8 @@ void merge(int *arr, int s, int e)
     }
     delete[] arr2;
 }
-void mergesort(int *arr, int s, int e)
-{
-    if (s < e)
-    {
+void mergesort(int* arr, int s, int e) {
+    if (s < e) {
         int mid = (s + e) / 2;
         mergesort(arr, s, mid);
         mergesort(arr, mid + 1, e);
@@ -37,12 +34,10 @@ void mergesort(int *arr, int s, int e)
     }
 }
 
-int main()
-{
-    int arr[9] = {6, 3, 5, 1, 0, 234, 2, 532, 6549};
+int main() {
+    int arr[9] = { 6, 3, 5, 1, 0, 234, 2, 532, 6549 };
     mergesort(arr, 0, 8);
-    for (int i : arr)
-    {
+    for (int i : arr) {
         cout << i << " ";
     }
     cout << endl;

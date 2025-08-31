@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-/* here multiple buy and sell, if but then first sell and so on
+/* here multiple buy and sell, if buy then first sell and so on
 
 canBuy = true -> buy it
 			  -> ignore
@@ -17,8 +17,8 @@ if(canBuy)
 		skip => 0+f(i+1, true)
 	]
 else
-	proft = max[
-		buy => +prices[i] + f(i+1, true)
+	profit = max[
+		sell => +prices[i] + f(i+1, true)
 		skip => 0+f(i+1, false)
 	]
  */

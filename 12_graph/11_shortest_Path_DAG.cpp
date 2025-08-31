@@ -1,53 +1,88 @@
-#include<iostream>
-#include<unordered_map>
-#include<list>
-#include<stack>
-#include<vector>
-#include<limits.h>
+/*
+
+| Feature                   | **Topological Sort + DP**  | **Dijkstra**                     | **Bellman-Ford**         | **Floyd-Warshall**       |
+| ------------------------- | -------------------------- | -------------------------------- | ------------------------ |------------------------ |
+| Graph Requirement         | **Directed Acyclic Graph** | Any graph (no negative weights)  | Any graph                |Any                      |
+| Supports Negative Weights | ✅ Yes                      | ❌ No                             | ✅ Yes                  |✅ Yes                    |
+| Detects Negative Cycles   | ❌ No                       | ❌ No                             | ✅ Yes                  |✅ Yes                    |
+| Edge Relaxation           | Once per edge              | Multiple (via priority queue)    | Up to V–1 times per edge |
+| Time Complexity           | `O(V + E)`                 | `O((V + E) log V)` with min-heap | `O(V × E)`               |`O(V³)`                  |
+| Space Complexity          | `O(V + E)`                 | `O(V + E)`                       | `O(V+E)`                   |O(V²)                  |
+| Mutability of Graph       | Must be a DAG              | Must not have negative edges     | Can be any               |
+| **Use Case**                | Fast on DAGs              | Fast on positive weights        | Any graph, cycle check   | All-pairs shortest paths |
+| **Shortest Path Type**      | Single Source             | Single Source                   | Single Source            | All Pairs                |
+
+*/
+#include <iostream>
+#include <unordered_map>
+#include <list>
+#include <stack>
+#include <vector>
+#include <limits.h>
 using namespace std;
 
-
 class Graph {
-public:
+private:
     unordered_map<int, list<pair<int, int>>> adjList;
-    void addEdge(int u, int v, int weight) {
-        adjList[u].push_back({v, weight});
-    }
-    void printAdjList() {
-        for (auto i : adjList) {
-            cout << i.first << " ";
-            for (auto j : i.second) {
-                cout << "(" << j.first << "," << j.second << "), ";
-            }
-            cout << endl;
-        }
-    }
-    void DFS(int node, unordered_map<int, bool>& isVisited, stack<int>& s) {
-        isVisited[node] = true;
-        for (auto neighbour : adjList[node]) {
-            if (!isVisited[neighbour.first]) {
-                DFS(neighbour.first, isVisited, s);
-            }
-        }
-        s.push(node);
-    }
-    void getShortestPath(int src, vector<int>& dist, stack<int>& s) {
-        dist[src] = 0;
-        while (!s.empty()) {
-            int top = s.top();
-            s.pop();
 
-            if (dist[top] != INT_MAX) {
-                for (auto neighbour : adjList[top]) {
-                    if (dist[top] + neighbour.second < dist[neighbour.first]) {
-                        dist[neighbour.first] = dist[top] + neighbour.second;
+    void dfsHelper(int node, unordered_map<int, bool>& isVisited, stack<int>& topoStack) {
+        isVisited[node] = true;
+        for (auto& neighbor : adjList[node]) {
+            if (!isVisited[neighbor.first]) {
+                dfsHelper(neighbor.first, isVisited, topoStack);
+            }
+        }
+        topoStack.push(node);
+    }
+
+public:
+    void addEdge(int u, int v, int weight) {
+        adjList[u].emplace_back(v, weight);
+    }
+
+    void printAdjList() const {
+        cout << "Adjacency List:\n";
+        for (const auto& [u, neighbors] : adjList) {
+            cout << u << " -> ";
+            for (const auto& [v, wt] : neighbors) {
+                cout << "(" << v << "," << wt << ") ";
+            }
+            cout << "\n";
+        }
+    }
+
+    vector<int> shortestPathDAG(int src, int totalNodes) {
+        unordered_map<int, bool> isVisited;
+        stack<int> topoStack;
+
+        // Perform topological sort
+        for (int i = 0; i < totalNodes; ++i) {
+            if (!isVisited[i]) {
+                dfsHelper(i, isVisited, topoStack);
+            }
+        }
+
+        // Initialize distances
+        vector<int> dist(totalNodes, INT_MAX);
+        dist[src] = 0;
+
+        // Relax edges according to topological order
+        while (!topoStack.empty()) {
+            int u = topoStack.top();
+            topoStack.pop();
+
+            if (dist[u] != INT_MAX) {
+                for (auto& [v, weight] : adjList[u]) {
+                    if (dist[u] + weight < dist[v]) {
+                        dist[v] = dist[u] + weight;
                     }
                 }
             }
         }
+
+        return dist;
     }
 };
-
 
 int main() {
     Graph g;
@@ -63,24 +98,19 @@ int main() {
 
     g.printAdjList();
 
-    // topological sort
-    unordered_map<int, bool> isVisited;
-    stack<int> s;
-    int totalNode = 6;
-    for (int i = 0; i < totalNode; i++) {
-        if (!isVisited[i]) {
-            g.DFS(i, isVisited, s);
-        }
-    }
     int src = 0;
-    vector<int> dist(totalNode, INT_MAX);
+    int totalNodes = 6;
 
-    g.getShortestPath(src, dist, s);
-    // ans
-    cout << "ans : " << endl;
-    for (int i = 0; i < dist.size(); i++) {
-        cout << dist[i] << " ";
-    }cout << endl;
+    vector<int> shortestDistances = g.shortestPathDAG(src, totalNodes);
+
+    cout << "\nShortest distances from node " << src << ":\n";
+    for (int i = 0; i < totalNodes; ++i) {
+        if (shortestDistances[i] == INT_MAX)
+            cout << "INF ";
+        else
+            cout << shortestDistances[i] << " ";
+    }
+    cout << endl;
 
     return 0;
 }

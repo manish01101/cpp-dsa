@@ -15,8 +15,8 @@ void rev(string& str, int i, int j) {
 // check palindrome
 bool checkPalindrome(string s, int i, int j) {
     // base case
-    if (i > j) {
-        return false;
+    if (i >= j) {
+        return true;
     }
     if (s[i] != s[j]) {
         return false;

@@ -12,7 +12,7 @@ kahn algo uses bfs:
 -> find indegree of all nodes
 -> in queue, insert 0-indegree nodes
 -> apply bfs
--> while visiting each neighbour, decrease their indegree as thier parent is fetched, so now neighbour will become parent and parent must have indegree 0
+-> while visiting each neighbour, decrease their indegree as their parent is fetched, so now neighbour will become parent and parent must have indegree 0
 
 Kahn's algorithm is a classic method for performing a topological sort of a Directed Acyclic Graph (DAG). The algorithm works by repeatedly removing nodes with no incoming edges and updating the incoming edge counts of their neighboring nodes.
 */

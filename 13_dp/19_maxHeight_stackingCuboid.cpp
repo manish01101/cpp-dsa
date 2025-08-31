@@ -14,7 +14,37 @@ class Solution {
 		}
 		return false;
 	}
-	int solve(int n, vector<vector<int>>& cuboids) {
+	int solveMem(int n, vector<vector<int>>& cuboids, int curr, int prev, vector<vector<int>>& dp) {
+		if (curr == n)
+			return 0;
+		if (dp[curr][prev + 1] != -1) {
+			return dp[curr][prev + 1];
+		}
+
+		int incl = 0;
+		if (prev == -1 or check(cuboids[curr], cuboids[prev])) {
+			incl = cuboids[curr][2] + solveMem(n, cuboids, curr + 1, curr, dp);
+		}
+		int excl = solveMem(n, cuboids, curr + 1, prev, dp);
+		return dp[curr][prev + 1] = max(incl, excl);
+	}
+
+	int solveTab(int n, vector<vector<int>>& cuboids) {
+		vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+
+		for (int curr = n - 1; curr >= 0; --curr) {
+			for (int prev = curr - 1; prev >= -1; --prev) {
+				int incl = 0;
+				if (prev == -1 or check(cuboids[curr], cuboids[prev])) {
+					incl = cuboids[curr][2] + dp[curr + 1][curr + 1];
+				}
+				int excl = dp[curr + 1][prev + 1];
+				dp[curr][prev + 1] = max(incl, excl);
+			}
+		}
+		return dp[0][0];
+	}
+	int solveSpcOpt(int n, vector<vector<int>>& cuboids) {
 		vector<int> currRow(n + 1, 0);
 		vector<int> nextRow(n + 1, 0);
 
@@ -44,6 +74,12 @@ public:
 		sort(cuboids.begin(), cuboids.end());
 
 		// apply longest increasing subseq
-		return solve(n, cuboids);
+		
+		// vector<vector<int>> dp(n, vector<int>(n + 1, -1));
+		// return solveMem(n, cuboids, 0, -1, dp);
+
+		// return solveTab(n, cuboids);
+
+		// return solveSpcOpt(n, cuboids);
 	}
 };

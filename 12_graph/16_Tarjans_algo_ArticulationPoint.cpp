@@ -9,51 +9,52 @@ using namespace std;
 
 /*
 articulation point -> node upon removal, graph divided into two or more component
+leaf nodes are not articulation points,
+
+0 - 1
+|   |
+3 - 2
+So in a cycle:
+No edge is a bridge
+No node is an articulation point
+
+tc & sc : O(V + E)
 */
 
-int min(int a, int b) {
-    if (a < b) return a;
-    return b;
-}
-
-void dfs(int node, int parent, vector<int>& discoveryTime, vector<int>& earliestTime, unordered_map<int, bool>& isVisited, unordered_map<int, list<int>>& adj, vector<bool>& ap, int& timer) {
+void dfs(int node, int parent, vector<int>& discoveryTime, vector<int>& earliestTime, unordered_map<int, bool>& isVisited, unordered_map<int, list<int>>& adj, vector<bool>& isAP, int& timer) {
 
     isVisited[node] = true;
     discoveryTime[node] = earliestTime[node] = timer++;
     int child = 0;
-    
+
     for (auto neighbour : adj[node]) {
         if (neighbour == parent) {
             continue;
         }
         if (!isVisited[neighbour]) {
-            dfs(neighbour, node, discoveryTime, earliestTime, isVisited, adj, ap, timer);
+            dfs(neighbour, node, discoveryTime, earliestTime, isVisited, adj, isAP, timer);
             // update earliest time
             earliestTime[node] = min(earliestTime[node], earliestTime[neighbour]);
-            // check AP or not
+            // Articulation Point Condition (non-root)
             if (earliestTime[neighbour] >= discoveryTime[node] && parent != -1) {
-                ap[node] = true;
+                isAP[node] = true;
             }
             child++;
         }
-        else {
+        else { // back edge
             earliestTime[node] = min(earliestTime[node], discoveryTime[neighbour]);
         }
     }
     if (parent == -1 && child > 1) { // handle root node
-        ap[node] = true;
+        isAP[node] = true;
     }
 }
 
 int main() {
     int n = 5;
     int e = 5;
-    vector<pair<int, int>> edges;
-    edges.push_back(make_pair(0, 3));
-    edges.push_back(make_pair(3, 4));
-    edges.push_back(make_pair(0, 4));
-    edges.push_back(make_pair(0, 1));
-    edges.push_back(make_pair(1, 2));
+    vector<pair<int, int>> edges = { {0, 3}, {3, 4}, {0, 4}, {0, 1}, {1, 2} };
+    // vector<pair<int, int>> edges = { {0, 1}, {1, 2}, {2, 0}, {1, 3}, {3, 4} };
 
     // adj list
     unordered_map<int, list<int>> adj;
@@ -68,20 +69,21 @@ int main() {
     vector<int> discoveryTime(n, -1);
     vector<int> earliestTime(n, -1);
     unordered_map<int, bool> isVisited;
-    vector<bool> ap(n, false);
+    vector<bool> isAP(n, false);
 
     // dfs
     for (int i = 0; i < n; i++) {
         if (!isVisited[i]) {
-            dfs(i, -1, discoveryTime, earliestTime, isVisited, adj, ap, timer);
+            dfs(i, -1, discoveryTime, earliestTime, isVisited, adj, isAP, timer);
         }
     }
 
     // print ap
     cout << "articulation points are as follows: " << endl;
     for (int i = 0; i < n; i++) {
-        if (ap[i] != false) {
+        if (isAP[i]) {
             cout << i << " ";
         }
     }cout << endl;
 }
+

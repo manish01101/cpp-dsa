@@ -24,7 +24,7 @@ int solveMem(int n, int a[], int curr, int prev, vector<vector<int>>& dp) {
 		return 0;
 	}
 	if (dp[curr][prev + 1] != -1) { // prev+1 for handling index
-		return dp[curr][prev];
+		return dp[curr][prev + 1];
 	}
 	// include
 	int take = 0;

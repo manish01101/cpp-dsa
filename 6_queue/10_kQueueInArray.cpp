@@ -30,7 +30,10 @@ public:
         freespot = 0;
     }
     ~kQueue() {
-        delete[] front, rear, next, arr;
+        delete[] front;
+        delete[] rear;
+        delete[] arr;
+        delete[] next;
     }
 
     void enqueue(int data, int qn) {
@@ -60,7 +63,7 @@ public:
         rear[qn - 1] = index;
 
         //push element
-        arr[index] = n;
+        arr[index] = data;
     }
     int dequeue(int qn) {
         //underflow
@@ -73,7 +76,10 @@ public:
 
         //front ko aage badhao
         front[qn - 1] = next[index];
-
+        // If the queue becomes empty after this dequeue, reset its rear as well
+        if (front[qn - 1] == -1) {
+            rear[qn - 1] = -1;
+        }
         //freeslot ko manage krlo
         next[index] = freespot;
         freespot = index;

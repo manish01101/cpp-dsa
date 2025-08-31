@@ -73,7 +73,7 @@ int solveTab(vector<int>& weight, vector<int>& value, int n, int capacity) {
 
 	// Step 2: Base Case
 	// for (int w = weight[0]; w <= capacity; w++) {
-	// 	if (weight[0] <= capacity)
+	// 	if (weight[0] <= w)
 	// 		dp[0][w] = value[0];
 	// 	else
 	// 		dp[0][w] = 0;
@@ -104,9 +104,9 @@ int solveSpaceOpt(vector<int>& weight, vector<int>& value, int n, int capacity) 
 	vector<int> prev(capacity + 1, 0);
 	vector<int> curr(capacity + 1, 0);
 
-	// step 2: analyze vase case
+	// step 2: analyze base case
 	for (int w = weight[0]; w <= capacity; w++) {
-		if (weight[0] <= capacity)
+		if (weight[0] <= w)
 			prev[w] = value[0];
 		else
 			prev[w] = 0;
@@ -134,7 +134,7 @@ int solveSpaceOpt2(vector<int>& weight, vector<int>& value, int n, int capacity)
 
 	// step 2: analyze vase case
 	for (int w = weight[0]; w <= capacity; w++) {
-		if (weight[0] <= capacity)
+		if (weight[0] <= w)
 			curr[w] = value[0];
 		else
 			curr[w] = 0;

@@ -53,44 +53,61 @@ void buildST(vector<int>& arr, int stIdx, int start, int end, vector<int>& segme
 }
 
 // QUERY SUM
-int getSumUtil(int i, int si, int sj, int qi, int qj, vector<int>& segmentTree) { // O(log n)
-	if (qj <= si || qi >= sj) { // non overlapping
+int getSumUtil(int segTreeIdx, int si, int sj, int qi, int qj, vector<int>& segmentTree) { // O(log n)
+	if (qj <= si || qi >= sj) { // non overlapping for exclusive segTree, for inclusive segment trees, it should be if (qj < si || qi > sj).
 		return 0;
 	}
 	else if (si >= qi && sj <= qj) { // complete overlapping
-		return segmentTree[i];
+		return segmentTree[segTreeIdx];
 	}
 	else { // partial overlapping
 		int mid = (si + sj) / 2;
-		int left = getSumUtil(2 * i + 1, si, mid, qi, qj, segmentTree);
-		int right = getSumUtil(2 * i + 2, mid + 1, sj, qi, qj, segmentTree);
+		int left = getSumUtil(2 * segTreeIdx + 1, si, mid, qi, qj, segmentTree);
+		int right = getSumUtil(2 * segTreeIdx + 2, mid + 1, sj, qi, qj, segmentTree);
 		return left + right;
 	}
 }
 int getSum(vector<int>& arr, int qi, int qj, vector<int>& segmentTree) {
-	int i = 0, si = 0, sj = arr.size() - 1;
-	return getSumUtil(i, si, sj, qi, qj, segmentTree);
+	int segTreeIdx = 0, si = 0, sj = arr.size() - 1;
+	return getSumUtil(segTreeIdx, si, sj, qi, qj, segmentTree);
 }
 
 // QUERY UPDATE
-void updateSTUtil(int i, int si, int sj, int idx, int diff, vector<int>& segmentTree) { // O(log n)
-	if (idx < si || idx > sj) { // non-overlapping
+void updateSTUtil(int segTreeIdx, int si, int sj, int valIdx, int diff, vector<int>& segmentTree) { // O(log n)
+	if (valIdx < si || valIdx > sj) { // non-overlapping
 		return;
 	}
 	// idx lie in range
-	segmentTree[i] += diff;
+	segmentTree[segTreeIdx] += diff;
 	// check currPos is not leaf node -> if so update its child val
 	if (si != sj) { // non-leaf node
 		int mid = (si + sj) / 2;
-		updateSTUtil(2 * i + 1, si, mid, idx, diff, segmentTree);
-		updateSTUtil(2 * i + 2, mid + 1, sj, idx, diff, segmentTree);
+		updateSTUtil(2 * segTreeIdx + 1, si, mid, valIdx, diff, segmentTree);
+		updateSTUtil(2 * segTreeIdx + 2, mid + 1, sj, valIdx, diff, segmentTree);
 	}
 }
-void updateST(vector<int>& arr, int idx, int newVal, vector<int>& segmentTree) {
-	int diff = newVal - arr[idx];
-	arr[idx] = newVal;
-	int i = 0, si = 0, sj = arr.size() - 1;
-	updateSTUtil(i, si, sj, idx, diff, segmentTree);
+void updateST(vector<int>& arr, int valIdx, int newVal, vector<int>& segmentTree) {
+	int diff = newVal - arr[valIdx];
+	arr[valIdx] = newVal;
+	int segTreeIdx = 0, si = 0, sj = arr.size() - 1;
+	updateSTUtil(segTreeIdx, si, sj, valIdx, diff, segmentTree);
+}
+//         OR
+void updateSTutil2(int segTreeIdx, int s, int e, int valIdx, int val, vector<int>& segmentTree) {
+	if (s == e)
+		segmentTree[segTreeIdx] = val;
+	else {
+		int mid = (s + e) / 2;
+		if (valIdx <= mid)
+			updateSTutil2(2 * segTreeIdx + 1, s, mid, valIdx, val, segmentTree);
+		else
+			updateSTutil2(2 * segTreeIdx + 2, mid + 1, e, valIdx, val, segmentTree);
+		segmentTree[segTreeIdx] = segmentTree[2 * segTreeIdx + 1] + segmentTree[2 * segTreeIdx + 2];
+	}
+}
+void updateST2(vector<int>& arr, int idx, int val, vector<int>& segmentTree) {
+	int segTreeIdx = 0, s = 0, e = arr.size() - 1;
+	updateSTutil2(segTreeIdx, s, e, idx, val, segmentTree);
 }
 
 
@@ -116,7 +133,7 @@ int main() {
 	// UPDATE OPERATION ON SEGMENT TREE
 	int idx = 2;
 	int newVal = 9;
-	updateST(arr, idx, newVal, segmentTree);
+	updateST2(arr, idx, newVal, segmentTree);
 
 	for (auto ele : segmentTree) {
 		cout << ele << " ";

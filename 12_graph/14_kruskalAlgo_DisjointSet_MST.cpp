@@ -8,6 +8,16 @@
 #include<numeric> // for iota(it.start, it.end, initial Val)
 using namespace std;
 /*
+Kruskal's Algorithm is another greedy algorithm to find the Minimum Spanning Tree (MST) of a connected, undirected, weighted graph. Unlike Prim's, Kruskal’s algorithm sorts all edges and processes them in increasing order of weight, adding them to the MST if they don’t form a cycle (checked via Disjoint Set/Union-Find).
+Steps of Kruskal's Algorithm
+    Sort all the edges in non-decreasing order of their weight.
+    Initialize MST as an empty set.
+    For each edge in order:
+        a. Check if adding the edge forms a cycle using union-find/disjoint-set.
+        b. If not, add the edge to MST.
+    Repeat until (V - 1) edges are included in the MST (V = number of vertices).
+
+Union find:
 if rank of parent of two node equal
     -> make one node parent of another node
     -> rank of parent node++
@@ -65,7 +75,7 @@ int minimumSpanningTree(vector<vector<int>>& edges, int n) {
 
     sort(edges.begin(), edges.end(), [](vector<int>& a, vector<int>& b) {
         return a[2] < b[2];
-    }); // sort by weight@index-2
+        }); // sort by weight@index-2
 
     vector<int> parent(n);
     vector<int> rank(n);
@@ -77,12 +87,14 @@ int minimumSpanningTree(vector<vector<int>>& edges, int n) {
 
     int minWeight = 0;
 
+    cout << "Edges \tWeight\n";
     for (int i = 0; i < edges.size(); i++) {
         int u = findParent(parent, edges[i][0]);
         int v = findParent(parent, edges[i][1]);
         int wt = edges[i][2];
 
         if (u != v) { // parent is different
+            cout << edges[i][0] << " - " << edges[i][1] << "\t" << wt << "\n";
             minWeight += wt;
             unionSet(u, v, parent, rank);
         }
@@ -90,3 +102,12 @@ int minimumSpanningTree(vector<vector<int>>& edges, int n) {
     return minWeight;
 }
 
+int main() {
+    int n = 5;
+    vector<vector<int>> edges = {
+        {0,1,2}, {0,3,6}, {1,2,3}, {1,3,8}, {1,4,5},
+        {2,4,7}, {3,4,9}
+    };
+    int minWt = minimumSpanningTree(edges, n);
+    cout << "Min Weight is: " << minWt << endl;
+}

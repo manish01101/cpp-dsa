@@ -18,7 +18,7 @@ Node* flat(Node* root) {
     Node* curr = newRoot;
     // node creation for rest ele
     for (int i = 1; i < n; i++) {
-        Node* newNode = new Node(in[1]);
+        Node* newNode = new Node(in[i]);
         curr->left = nullptr;
         curr->right = newNode;
         curr = newNode; // increment curr
@@ -33,25 +33,28 @@ Node* flat(Node* root) {
 // morris traversal for inorder traversal (used to flatten a bst)
 void flattenToSortedList(node* root) {
     node* curr = root;
-    node* prev = nullptr;
     
     while (curr != nullptr) {
         if (curr->left) {
+            // Find the rightmost node of the left subtree
             node* pre = curr->left;
             while (pre->right) {
                 pre = pre->right;
             }
-            pre->right = curr;
-            node* temp = curr;
-            curr = curr->left;
-            temp->left = nullptr;
-        } else {
-            if (prev) prev->right = curr;
-            prev = curr;
-            curr = curr->right;
+            
+            // Connect the rightmost node of the left subtree to the current node's right
+            pre->right = curr->right;
+            
+            // Move the left subtree to the right of the current node
+            curr->right = curr->left;
+            curr->left = nullptr;
         }
+        
+        // Move to the next node
+        curr = curr->right;
     }
 }
+
 
 // recursive approach
 node* prev = nullptr;
@@ -64,3 +67,26 @@ void flattenBST(node* root) {
     prev = root;
     flattenBST(root->right); // Right subtree
 }
+
+class Solution {
+  public:
+    Node* prev = nullptr;
+    Node* ans = nullptr;
+    bool flag = true;
+    Node *flattenBST(Node *root) {
+        if(!root) return nullptr;
+        
+        flattenBST(root->left);
+        root->left = nullptr;
+        
+        if(prev) prev->right = root;
+        if(flag) {
+            ans = root;
+            flag = false;
+        }
+        prev = root;
+        
+        flattenBST(root->right);
+        return ans;
+    }
+};

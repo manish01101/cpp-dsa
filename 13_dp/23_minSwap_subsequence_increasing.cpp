@@ -27,7 +27,7 @@ int solve(vector<int>& nums1, vector<int>& nums2, int index, bool isSwapped) {
 		ans = solve(nums1, nums2, index + 1, false);
 	}
 	// swap
-	if (nums1[index] > prev2 && nums1[index] > prev1) {
+	if (nums1[index] > prev2 && nums2[index] > prev1) {
 		ans = min(ans, 1 + solve(nums1, nums2, index + 1, true));
 	}
 	return ans;
@@ -55,7 +55,7 @@ int solveMem(vector<int>& nums1, vector<int>& nums2, int index, bool isSwapped, 
 		ans = solveMem(nums1, nums2, index + 1, false, dp);
 	}
 	// swap
-	if (nums1[index] > prev2 && nums1[index] > prev1) {
+	if (nums1[index] > prev2 && nums2[index] > prev1) {
 		ans = min(ans, 1 + solveMem(nums1, nums2, index + 1, true, dp));
 	}
 	return dp[index][isSwapped] = ans;
@@ -81,7 +81,7 @@ int solveTab(vector<int>& nums1, vector<int>& nums2) {
 				ans = dp[index + 1][false];
 			}
 			// swap
-			if (nums1[index] > prev2 && nums1[index] > prev1) {
+			if (nums1[index] > prev2 && nums2[index] > prev1) {
 				ans = min(ans, 1 + dp[index + 1][true]);
 			}
 			dp[index][isSwapped] = ans;
@@ -115,7 +115,7 @@ int solveSpaceOpt(vector<int>& nums1, vector<int>& nums2) {
 				ans = noSwap;
 			}
 			// swap
-			if (nums1[index] > prev2 && nums1[index] > prev1) {
+			if (nums1[index] > prev2 && nums2[index] > prev1) {
 				ans = min(ans, 1 + Swap);
 			}
 
@@ -132,7 +132,7 @@ int solveSpaceOpt(vector<int>& nums1, vector<int>& nums2) {
 
 
 
-int solveSpaceOpt(vector<int>& nums1, vector<int>& nums2) {
+int solveSpaceOpt2(vector<int>& nums1, vector<int>& nums2) {
 	int n = nums1.size();
 
 	// Initialize swap and no-swap for the first element

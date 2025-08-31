@@ -8,7 +8,7 @@ public:
     vector<TrieNode*> children;
     bool isTerminal;
 
-    TrieNode(char ch) : data(ch), children(26, nullptr), isTerminal(false) {}
+    TrieNode(char ch) : data(ch), children(26, nullptr), isTerminal(false) { }
 };
 
 class Trie {
@@ -42,7 +42,7 @@ private:
     }
 
 public:
-    Trie() : root(new TrieNode('\0')) {}
+    Trie() : root(new TrieNode('\0')) { }
 
     void insertWord(const string& word) {
         insertUtil(root, word, 0);
@@ -89,7 +89,7 @@ public:
 class Trie {
 private:
     TrieNode* root;
-    
+
     // inserting
     void insertUtil(TrieNode* root, string word) {
         //base case
