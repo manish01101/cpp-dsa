@@ -106,3 +106,68 @@ int main() {
 
     return 0;
 }
+/*
+Instead of creating a parent map, we can find the start node and simultaneously run a BFS/DFS that explores both children and parent-like traversal.
+The trick:
+Treat the tree as an undirected graph.
+Build adjacency list on the fly (like a graph of neighbors).
+Then BFS from the start node.
+
+✅ Approach (No Parent Map)
+Build an adjacency list (unordered_map<int, vector<int>> graph) from the binary tree:
+Each edge is bidirectional (u ↔ v).
+That way, you don't need an explicit parent map.
+BFS starting from the node start.
+Track visited nodes to prevent cycles.
+Each BFS level adds 1 to time.
+*/
+
+class Solution {
+    void buildGraph(TreeNode* root, unordered_map<int, vector<int>>& graph) {
+        if (!root) return;
+
+        if (root->left) {
+            graph[root->val].push_back(root->left->val);
+            graph[root->left->val].push_back(root->val);
+            buildGraph(root->left, graph);
+        }
+        if (root->right) {
+            graph[root->val].push_back(root->right->val);
+            graph[root->right->val].push_back(root->val);
+            buildGraph(root->right, graph);
+        }
+    }
+
+public:
+    int amountOfTime(TreeNode* root, int start) {
+        // Step 1: Build adjacency list
+        unordered_map<int, vector<int>> graph;
+        buildGraph(root, graph);
+
+        // Step 2: BFS from start
+        queue<int> q;
+        unordered_set<int> visited;
+
+        q.push(start);
+        visited.insert(start);
+
+        int time = -1; // because last level does not spread
+        while (!q.empty()) {
+            int size = q.size();
+            ++time; // each level takes 1 unit time
+
+            for (int i = 0; i < size; i++) {
+                int node = q.front();
+                q.pop();
+
+                for (int nei : graph[node]) {
+                    if (!visited.count(nei)) {
+                        visited.insert(nei);
+                        q.push(nei);
+                    }
+                }
+            }
+        }
+        return time;
+    }
+};

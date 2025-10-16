@@ -53,24 +53,24 @@ Total: O(n + m)
 */
 
 // Step 1: Build the LPS (Longest Prefix Suffix) array
-vector<int> computeLPS(const string& pattern) {
-    int m = pattern.size();
-    vector<int> lps(m, 0);
+vector<int> computeLPS(string s) {
+    int len = s.length();
+    vector<int> lps(len, 0);
+    int i = 0; // length of the previous longest prefix suffix
+    int j = 1;
 
-    int len = 0; // length of the previous longest prefix suffix
-    int i = 1;
-
-    while (i < m) {
-        if (pattern[i] == pattern[len]) {
-            len++;
-            lps[i] = len;
-            i++;
-        } else {
-            if (len != 0) {
-                len = lps[len - 1]; // fall back in the pattern
-            } else {
-                lps[i] = 0;
-                i++;
+    while (j < len) {
+        if (s[i] == s[j]) {
+            lps[j] = i + 1;
+            i++; j++;
+        }
+        else {
+            if (i > 0) {
+                i = lps[i - 1]; // check the prev one index val
+            }
+            else {
+                lps[j] = 0;
+                j++;
             }
         }
     }
@@ -78,25 +78,24 @@ vector<int> computeLPS(const string& pattern) {
 }
 
 // Step 2: Perform KMP pattern matching
-void KMP_Search(const string& text, const string& pattern) {
-    int n = text.size();
-    int m = pattern.size();
+void KMP_Search(const string& text, const string& pattern) { // O(m+n)
+    int t_size = text.size();
+    int p_size = pattern.size();
 
     vector<int> lps = computeLPS(pattern);
     int i = 0; // index for text
     int j = 0; // index for pattern
 
-    while (i < n) {
+    while (i < t_size) {
         if (pattern[j] == text[i]) {
-            i++;
-            j++;
+            i++; j++;
         }
-
-        if (j == m) {
+        if (j == p_size) {
             cout << "Pattern found at index " << (i - j) << endl;
             j = lps[j - 1]; // move to next possible match
-        } else if (i < n && pattern[j] != text[i]) {
-            if (j != 0)
+        }
+        else if (i < t_size && pattern[j] != text[i]) {
+            if (j > 0)
                 j = lps[j - 1]; // fall back using LPS
             else
                 i++;

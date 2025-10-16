@@ -70,7 +70,8 @@
     "typeindex": "cpp",
     "unordered_set": "cpp",
     "valarray": "cpp",
-    "span": "cpp"
+    "span": "cpp",
+    "shared_mutex": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

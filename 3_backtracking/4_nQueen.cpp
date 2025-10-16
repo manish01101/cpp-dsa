@@ -56,7 +56,7 @@ void solve(int col, vector<vector<int>>& ans, vector<vector<int>>& board, int n)
         return;
     }
     //solve 1 case and recursion will take care
-    for (int row = 0; row < n; row++) {
+    for (int row = 0; row < n; row++) { // *******-----   column wise(column is fixed for each recursive step)   -----*******
         if (isSafe(row, col, board, n)) {
             //if placing queen is safe
             board[row][col] = 1;
@@ -129,12 +129,12 @@ private:
             ans.push_back(board);
             return;
         }
-
-        for (int j = 0; j < n; j++) {
-            if (isSafe(board, row, j, n)) {
-                board[row][j] = 'Q';
+        // fix a row at each recursive step => row-wise approach
+        for (int col = 0; col < n; col++) {
+            if (isSafe(board, row, col, n)) {
+                board[row][col] = 'Q';
                 nQueen(board, row + 1, n, ans);
-                board[row][j] = '.';  // backtrack
+                board[row][col] = '.';  // backtrack
             }
         }
     }

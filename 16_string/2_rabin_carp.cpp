@@ -7,6 +7,17 @@ using namespace std;
 It uses a rolling hash to efficiently compare substrings.
 Best-case time: O(n + m)
 Worst-case (due to hash collisions): O(nm)
+
+total_char_type for alphabet = 26, all char = 256
+hash of pattern
+    hash = summ.[letter_val * total_char_type^pos_of_char]
+
+updation
+    b = hash_of_text
+    c = b - remove_letter_val * total_char_type^MSB
+    d = c * total_char_type => right shift operation
+    e = d + letter_val * total_char_type^LSB
+
 */
 class RabinKarp {
 private:
@@ -21,7 +32,7 @@ public:
 
         if (m > n) return result;
 
-        int h = 1;
+        int h = 1; // h would be "pow(d, M-1)%q
         for (int i = 0; i < m - 1; i++)
             h = (h * d) % q;
 
@@ -76,3 +87,17 @@ int main() {
 
     return 0;
 }
+
+
+/*
+rolling hash(as in each window, subtracting and adding)
+use unique hash method so that each window get unique hash, this makes it efficient
+steps:
+    - calculate hash for pattern
+    - calculate hash for 1st window in text
+    - repeat untill text ends
+        - if hash(pattern) == hash(text in window) -> match char by char
+        - subtract left most from hash(text_window)
+        (- shift entire hash(text_window) by 1 unit to left)
+        - add new char added to window
+*/
