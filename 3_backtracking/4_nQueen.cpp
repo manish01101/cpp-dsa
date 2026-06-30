@@ -101,7 +101,7 @@ private:
             }
         }
 
-        // left diagonal (top-left to bottom-right)
+        // left diagonal (bottom-right to top-left)
         int i = row, j = col;
         while (i >= 0 && j >= 0) {
             if (board[i][j] == 'Q') {
@@ -111,7 +111,7 @@ private:
             j--;
         }
 
-        // right diagonal (top-right to bottom-left)
+        // right diagonal (bottom-left to top-right)
         i = row, j = col;
         while (i >= 0 && j < n) {
             if (board[i][j] == 'Q') {

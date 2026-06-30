@@ -3,7 +3,7 @@
 bool isPossible(vector<int> &nums, int p, int minAllowed) {
 	int cnt = 0;
 	int index = 0;
-	while(index < nuums.size()-1) {
+	while(index < nums.size()-1) {
 		if(nums[index+1]-nums[index] <= minAllowed) {
 			cnt++;
 			index += 2;

@@ -9,7 +9,7 @@ approach
 
     -> make mapping of node visited <Node*, bool>
     -> insert target node in queue
-    -> maked visited as true
+    -> marked visited as true
     -> check for its left, right & parent, if not visited then insert into queue
     -> if any insertion done in queue, increment time
 */

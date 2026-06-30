@@ -1,10 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
 /*
-[capture](parameters) -> return_type {
-    // body
-}
-But you usually skip -> return_type unless needed.
+A lambda function is an anonymous (unnamed) function you can define inline.
+It can be passed as an argument, stored in a variable, or used immediately.
+
+[capture](parameters) -> return_type { body }
+capture → Which variables from the surrounding scope to use
+parameters → Like normal function parameters
+return_type → Optional, usually inferred
+body → Function code
 */
 
 // basic lambda
@@ -14,21 +18,26 @@ auto greet = []() {
 greet();
 
 
-// capture list
-// by value [=]
+// capture Clause ([]): The capture part lets the lambda use variables from the surrounding scope.
 int x = 10;
-auto show = [=]() {
-    cout << "x: " << x << endl;
-};
-show(); // x: 10
+int y = 5;
 
-// by Reference [&]
-int x = 10;
-auto modify = [&]() {
-    x += 5;
-};
-modify();
-cout << x << endl; // 15
+// Capture by value
+auto val = [x, y]() { return x + y; };
+cout << val() << endl;  // 15
+
+// Capture by reference
+auto ref = [&x, &y]() { x += 1; y += 2; };
+ref();
+cout << x << " " << y << endl; // 11 7
+
+// Capture everything by value
+auto val_all = [=]() { return x + y; };
+
+// Capture everything by reference
+auto ref_all = [&]() { x += 1; y += 1; };
+
+
 
 // with stl
 //Sorting with std::sort
@@ -45,6 +54,7 @@ copy_if(nums.begin(), nums.end(), back_inserter(evens), [](int n) {
 });
 
 // Mutable Lambdas: modify captured variables by value inside the lambda
+// By default, a lambda that captures by value cannot modify the captured variable.
 int a = 10;
 auto lambda = [a]() mutable {
     a++;
@@ -52,6 +62,7 @@ auto lambda = [a]() mutable {
 };
 lambda(); // prints 11
 cout << a << endl; // still 10 outside
+
 
 // Higher Order Functions: Pass lambdas as arguments
 void operate(int a, int b, function<int(int, int)> func) {
@@ -62,3 +73,14 @@ int main() {
     operate(5, 3, [](int x, int y) { return x + y; }); // Result: 8
 }
 
+
+// Capturing this ->Inside a class, you can capture this to access member variables:
+class Counter {
+    int x = 0;
+public:
+    void increment() {
+        auto f = [this]() { x++; };
+        f();
+        cout << x << endl;
+    }
+};

@@ -12,7 +12,7 @@ int solve(int index, int endIndex, vector<int>& slices, int n) {
 	return max(take, notTake);
 }
 
-/* index 0 to k-2 & 2 to k-1,  n: k/3 to 0 */
+/* index 0 to k-2 & 1 to k-1,  n: k/3 to 0 */
 int solveMem(int index, int endIndex, vector<int>& slices, int n, vector<vector<int>> dp) {
 	// base case
 	if (n == 0 || index > endIndex) {

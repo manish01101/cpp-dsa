@@ -11,7 +11,8 @@ class Derived : private Base
 
 the keyword public specifies that obj of derived class are able to access public member fn of base class
 when private is used, obj of derived class cannot access public member fn of base class => i.e no member of base class is accessible to obj of derived class
-
+Private/protected inheritance does not mean Derived cannot use Base’s members.
+It means Derived objects expose none of Base’s members to the outside world.
 */
 
 #include <iostream>

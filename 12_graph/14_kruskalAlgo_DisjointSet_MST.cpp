@@ -86,6 +86,7 @@ int minimumSpanningTree(vector<vector<int>>& edges, int n) {
     // vector<int> rank(n, 0);
 
     int minWeight = 0;
+    vector<pair<pair<int,int>, int>> mst;
 
     cout << "Edges \tWeight\n";
     for (int i = 0; i < edges.size(); i++) {
@@ -94,6 +95,8 @@ int minimumSpanningTree(vector<vector<int>>& edges, int n) {
         int wt = edges[i][2];
 
         if (u != v) { // parent is different
+            mst.push_back({{edges[i][0], edges[i][1]}, wt});
+            
             cout << edges[i][0] << " - " << edges[i][1] << "\t" << wt << "\n";
             minWeight += wt;
             unionSet(u, v, parent, rank);

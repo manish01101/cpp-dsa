@@ -6,9 +6,6 @@ unique_ptr has exclusive ownership. You must use std::move() to transfer ownersh
 shared_ptr allows multiple owners, and it maintains a reference count.
 weak_ptr is a non-owning reference to a shared_ptr, often used to break cyclic references (like in graphs or doubly-linked lists).
 */
-#include <iostream>
-#include <memory>
-using namespace std;
 
 int main() {
     cout << "---- unique_ptr Example ----" << endl;

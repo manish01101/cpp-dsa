@@ -19,7 +19,7 @@ int solveMem(int n, vector<int>& dp) {
 
 	int ans = n;
 	for (int i = 1; i * i <= n; i++) {;
-		ans = min(ans, i + solveMem(n - i * i, dp));
+		ans = min(ans, 1 + solveMem(n - i * i, dp));
 	}
 	return dp[n] = ans;
 }
